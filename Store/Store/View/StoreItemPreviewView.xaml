@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:Store.Ui.Converter;assembly=Store.Ui"
+             x:Class="Store.Ui.View.StoreItemPreviewView"> 
+    <ContentView.Content>
+
+        <Frame WidthRequest="100" 
+                Padding="5" 
+                BackgroundColor="White" >
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" 
+                                      Command="{Binding ShowSelectedItem}" />
+            </Frame.GestureRecognizers>
+
+            <StackLayout Orientation="Vertical">
+                <Image WidthRequest="75" 
+                    HeightRequest="75"
+                    HorizontalOptions="Center">
+                    <Image.Source>
+                        <Binding Path="Image" Mode="OneWay">
+                            <Binding.Converter>
+                                <local:BytesToImageConverter />
+                            </Binding.Converter>
+                        </Binding>
+                    </Image.Source>
+                </Image>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding Name, Mode=OneWay}"
+                           HorizontalTextAlignment="Start"
+                           HorizontalOptions="StartAndExpand"
+                           VerticalTextAlignment="Start"
+                           FontSize="Micro" />
+                    
+                    <Image HorizontalOptions="EndAndExpand"
+                           VerticalOptions="Start"
+                           BackgroundColor="Transparent"
+                           Source="ic_toc_black_24dp.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding ShowOptions}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding UserScore, StringFormat='{0:0.0}'}" />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
+    </ContentView.Content>
+</ContentView>

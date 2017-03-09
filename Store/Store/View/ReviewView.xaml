@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Store.Ui.View.ReviewView">
+
+    <StackLayout Orientation="Vertical">
+
+        <Label Text="{Binding UserName, Mode=OneWay}"
+               FontAttributes="Bold" />
+        <Label Text="{Binding Date, Mode=OneWay, StringFormat='{0:d.M.yyyy}'}" />
+
+        <Label Text="{Binding Text, Mode=OneWay}"
+               VerticalOptions="Fill" />
+
+    </StackLayout>
+    
+    
+</ContentView>

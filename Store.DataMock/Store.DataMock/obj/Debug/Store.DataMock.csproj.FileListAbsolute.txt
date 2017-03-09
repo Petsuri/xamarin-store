@@ -1,0 +1,7 @@
+C:\Users\Petri\documents\visual studio 2015\Projects\Store\Store.DataMock\Store.DataMock\bin\Debug\Store.DataMock.dll
+C:\Users\Petri\documents\visual studio 2015\Projects\Store\Store.DataMock\Store.DataMock\bin\Debug\Store.DataMock.pdb
+C:\Users\Petri\documents\visual studio 2015\Projects\Store\Store.DataMock\Store.DataMock\bin\Debug\Store.dll
+C:\Users\Petri\documents\visual studio 2015\Projects\Store\Store.DataMock\Store.DataMock\bin\Debug\Store.pdb
+C:\Users\Petri\documents\visual studio 2015\Projects\Store\Store.DataMock\Store.DataMock\obj\Debug\Store.DataMock.csprojResolveAssemblyReference.cache
+C:\Users\Petri\documents\visual studio 2015\Projects\Store\Store.DataMock\Store.DataMock\obj\Debug\Store.DataMock.dll
+C:\Users\Petri\documents\visual studio 2015\Projects\Store\Store.DataMock\Store.DataMock\obj\Debug\Store.DataMock.pdb

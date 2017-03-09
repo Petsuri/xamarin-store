@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Store.Ui.View.HomeDetailPage"
+             Title="HomeMasterPage">
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+                    iOS="10, 30, 10, 10"
+                    Android="10" />
+    </ContentPage.Padding>
+
+    <StackLayout Orientation="Vertical">
+
+        <Label Text="Suosittelemme sinulle"
+               HorizontalTextAlignment="Start"
+               FontAttributes="Bold" />
+
+
+
+        <ScrollView Orientation="Horizontal" Scrolled="BookRecommendationsScrolled">
+            <StackLayout Orientation="Horizontal">
+
+
+                <StackLayout x:Name="BookRecommendations"
+                         Orientation="Horizontal" 
+                         VerticalOptions="Fill">
+                </StackLayout>
+
+                <ActivityIndicator IsVisible="{Binding IsBusy, Mode=OneWay}" 
+                               IsRunning="{Binding IsBusy, Mode=OneWay}" />
+            </StackLayout>
+        </ScrollView>
+
+
+    </StackLayout>
+
+</ContentPage>
