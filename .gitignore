@@ -6,13 +6,15 @@
 *.exe
 *.o
 *.so
+*.stamp
+*.class
 
 # Generated files
 bin/
 gen/
 out/
 packages/
-obj/debug
+obj/
 
 # Packages #
 ############
