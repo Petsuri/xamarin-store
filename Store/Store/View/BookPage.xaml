@@ -5,106 +5,133 @@
              xmlns:views="clr-namespace:Store.Ui.View"
              x:Class="Store.Ui.View.BookPage"
              Padding="5, 20, 5, 0">
-
+       
     <ScrollView>
-        <StackLayout Orientation="Vertical">
 
-            <ActivityIndicator IsVisible="{Binding IsBusy, Mode=OneWay}" 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+            <ActivityIndicator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                               IsVisible="{Binding IsBusy, Mode=OneWay}" 
                                IsRunning="{Binding IsBusy, Mode=OneWay}" />
-            <StackLayout Orientation="Horizontal">
+            
+            <Image Grid.Row="1" Grid.Column="0"
+                   HorizontalOptions="Center"
+                   WidthRequest="125"
+                   HeightRequest="125">
+                <Image.Source>
+                    <Binding Path="Image" Mode="OneWay">
+                        <Binding.Converter>
+                            <converter:BytesToImageConverter />
+                        </Binding.Converter>
+                    </Binding>
+                </Image.Source>
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                            Command="{Binding ShowBookCover}"/>
+                </Image.GestureRecognizers>
+            </Image>
 
-                <Image HorizontalOptions="Center"
-                       WidthRequest="125"
-                       HeightRequest="125">
-                    <Image.Source>
-                        <Binding Path="Image" Mode="OneWay">
-                            <Binding.Converter>
-                                <converter:BytesToImageConverter />
-                            </Binding.Converter>
-                        </Binding>
-                    </Image.Source>
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1"
-                                              Command="{Binding ShowBookCover}"/>
-                    </Image.GestureRecognizers>
-                </Image>
-
-                <StackLayout Orientation="Vertical">
-                    <Label Text="{Binding Name, Mode=OneWay}"
-                           Style="{DynamicResource SubtitleStyle}"/>
-                    <Label Text="{Binding Author, Mode=OneWay}"
-                           Style="{DynamicResource CaptionStyle}"/>
-                    <Label Text="{Binding PublishedDate, StringFormat='{0:dd. MMMM yyyy}'}"
-                           Style="{DynamicResource CaptionStyle}"/>
-                </StackLayout>
-
+            <StackLayout Grid.Row="1" Grid.Column="1"
+                         Orientation="Vertical">
+                <Label Text="{Binding Name, Mode=OneWay}"
+                        Style="{DynamicResource SubtitleStyle}"/>
+                <Label Text="{Binding Author, Mode=OneWay}"
+                        Style="{DynamicResource CaptionStyle}"/>
+                <Label Text="{Binding PublishedDate, StringFormat='{0:dd. MMMM yyyy}'}"
+                        Style="{DynamicResource CaptionStyle}"/>
             </StackLayout>
 
-            <BoxView BackgroundColor="Gray" 
+
+            <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                     BackgroundColor="Gray" 
                      HeightRequest="1"
                      HorizontalOptions="Fill"/>
 
-            <StackLayout Orientation="Horizontal"
-                         Padding="25">
-
-                <StackLayout Orientation="Vertical"
-                             HorizontalOptions="CenterAndExpand">
-
-                    <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="CenterAndExpand" >
-                        <Label Text="{Binding UserScore, Mode=OneWay, StringFormat='{0:0.0}'}" />
-                        <Image Source="ic_star_black_18dp.png" />
-                    </StackLayout>
-
-                    <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="CenterAndExpand">
-
-                        <Label Text="{Binding ReviewerCount, Mode=OneWay}" />
-                        <Image Source="ic_person_black_18dp.png" />
-
-                    </StackLayout>
-
-
-                </StackLayout>
-
-                <StackLayout Orientation="Vertical"
-                             HorizontalOptions="CenterAndExpand">
-
-                    <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="CenterAndExpand">
-
-                        <Label Text="{Binding PurchasedCount, Mode=OneWay}" />
-                        <Image Source="ic_shopping_cart_black_24dp.png" />
-
-                    </StackLayout>
-                
-                </StackLayout>
             
+            
+            <StackLayout Grid.Row="3" Grid.Column="0"
+                         Orientation="Vertical">
+
+                <StackLayout Orientation="Horizontal"
+                                HorizontalOptions="CenterAndExpand" >
+                    <Label Text="{Binding UserScore, Mode=OneWay, StringFormat='{0:0.0}'}" />
+                    <Image Source="ic_star_black_18dp.png" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal"
+                                HorizontalOptions="CenterAndExpand">
+
+                    <Label Text="{Binding ReviewerCount, Mode=OneWay}" />
+                    <Image Source="ic_person_black_18dp.png" />
+
+                </StackLayout>
+
+
             </StackLayout>
 
-            <Label Text="{Binding Description, Mode=OneWay}"
+            <StackLayout Grid.Row="3" Grid.Column="1"
+                         Orientation="Vertical"
+                         HorizontalOptions="CenterAndExpand">
+
+                <StackLayout Orientation="Horizontal"
+                                HorizontalOptions="CenterAndExpand">
+
+                    <Label Text="{Binding PurchasedCount, Mode=OneWay}" />
+                    <Image Source="ic_shopping_cart_black_24dp.png" />
+
+                </StackLayout>
+
+            </StackLayout>
+            
+                       
+
+            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="{Binding Description, Mode=OneWay}"
                    Style="{DynamicResource CaptionStyle}" />
 
+            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                   HorizontalOptions="Center"
+                   Text="Arvostelut" 
+                   FontSize="Large"
+                   FontAttributes="Bold"/>
 
-            <StackLayout Padding="5, 20, 5, 0">
+            <ListView Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                      ItemsSource="{Binding Reviews, Mode=OneWay}"
+                      HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <views:ReviewView />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-                <Label Text="Arvostelut" 
-                       FontSize="Large"
-                       FontAttributes="Bold"/>
 
-                <ListView ItemsSource="{Binding Reviews, Mode=OneWay}"
-                          HasUnevenRows="True"
-                          VerticalOptions="Fill">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <views:ReviewView />
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+            <Label Grid.Row="7" Grid.Column="0"
+                   Text="Kirjoita arvostelu" />
 
-            </StackLayout>
-        </StackLayout>
+        </Grid>
+
+       
+        
+        
     </ScrollView>
+
+
+
 </ContentPage>
