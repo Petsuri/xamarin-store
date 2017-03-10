@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using Store.Domain;
+using Store.Ui.Common;
 using Store.Ui.View;
 
 using Xamarin.Forms;
@@ -21,6 +22,7 @@ namespace Store.Ui
 
             MainPage = new HomePage();
 
+
         }
 
         private static void RegisterDependencies(IUnityContainer container)
@@ -28,7 +30,7 @@ namespace Store.Ui
             container.RegisterType<IBookRepository, DataMock.BookRepository>();
             container.RegisterType<IMessageQueue, XamarinMessageQueue>();
             container.RegisterType<IReviewRepository, DataMock.BookReviewRepository>();
-
+            container.RegisterType<ICamera, Camera>();
         }
 
         protected override void OnStart()

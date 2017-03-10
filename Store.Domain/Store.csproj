@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Command.cs" />
     <Compile Include="Domain\IApplication.cs" />
+    <Compile Include="Domain\ICamera.cs" />
     <Compile Include="Domain\IMessageQueue.cs" />
     <Compile Include="Domain\IBookRepository.cs" />
     <Compile Include="Domain\IReviewRepository.cs" />

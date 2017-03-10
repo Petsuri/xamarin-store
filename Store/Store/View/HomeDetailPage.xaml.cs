@@ -41,7 +41,7 @@ namespace Store.Ui.View
                 var selectedAction = await DisplayActionSheet("Toiminnot", null, null, buttons);
                 
             });
-
+            
         }
         
         protected override void OnAppearing()

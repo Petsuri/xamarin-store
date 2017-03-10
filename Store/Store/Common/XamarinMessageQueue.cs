@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Store.Ui
+namespace Store.Ui.Common
 {
     class XamarinMessageQueue : IMessageQueue
     {
