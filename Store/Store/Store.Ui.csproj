@@ -38,6 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\ElementList.cs" />
     <Compile Include="Converter\BytesToImageConverter.cs" />
     <Compile Include="View\BookCoverPage.xaml.cs">
       <DependentUpon>BookCoverPage.xaml</DependentUpon>
@@ -135,7 +136,6 @@
   <ItemGroup>
     <EmbeddedResource Include="View\BookCarouselPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -147,7 +147,6 @@
   <ItemGroup>
     <EmbeddedResource Include="View\BookCoverPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

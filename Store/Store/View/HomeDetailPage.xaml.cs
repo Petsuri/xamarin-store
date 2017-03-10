@@ -22,8 +22,6 @@ namespace Store.Ui.View
             InitializeComponent();
 
             m_home = App.Container.Resolve<HomeDetailViewModel>();
-            m_home.Books.CollectionChanged += changeRenderedBooks;
-
             BindingContext = m_home;
 
             IBookRepository books = App.Container.Resolve<IBookRepository>();
@@ -64,25 +62,7 @@ namespace Store.Ui.View
 
 
         }
-
-        private void changeRenderedBooks(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                IList newBooks = e.NewItems;
-                foreach (var book in newBooks)
-                {
-                    BookRecommendations.Children.Add(new StoreItemPreviewView((BookPreviewItemViewModel)book));
-                }
-            }
-
-
-         
-
-        }
-
-
-        
+                
     }
     
 }

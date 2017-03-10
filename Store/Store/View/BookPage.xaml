@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:Store.Ui.Converter"
              xmlns:views="clr-namespace:Store.Ui.View"
+             xmlns:control="clr-namespace:Store.Ui.Control"
+             xmlns:model="clr-namespace:Store.Model;assembly=Store"
              x:Class="Store.Ui.View.BookPage"
              Padding="5, 20, 5, 0">
        
@@ -109,19 +111,12 @@
                    FontSize="Large"
                    FontAttributes="Bold"/>
 
-            <ListView Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
-                      ItemsSource="{Binding Reviews, Mode=OneWay}"
-                      HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <views:ReviewView />
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <control:ElementList Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                                 x:TypeArguments="views:ReviewView, model:Review"
+                                 ElementsSource="{Binding Reviews, Mode=TwoWay}" />
 
-
+            
+            
             <Label Grid.Row="7" Grid.Column="0"
                    Text="Kirjoita arvostelu" />
 
