@@ -21,7 +21,10 @@ namespace Store.Ui.View
         public BookCarouselPage(int selectedBookId, IEnumerable<int> allBookIds, BookCategory.Category selectedBookCategory)
         {
             InitializeComponent();
-            
+
+
+            Title = (selectedBookCategory == BookCategory.Category.Manga) ? "Mangaa suoraan Jaappanista" : "Suosittelemme sinulle";
+                
             setChildrenPages(selectedBookId, allBookIds, selectedBookCategory);
 
             var messaging = App.Container.Resolve<IMessageQueue>();

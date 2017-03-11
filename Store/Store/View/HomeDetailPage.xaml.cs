@@ -20,18 +20,15 @@ namespace Store.Ui.View
         public HomeDetailPage()
         {
             InitializeComponent();
-
-            IMessageQueue messaging = App.Container.Resolve<IMessageQueue>();
-            IBookRepository mangaRepository = App.Container.Resolve<IBookRepository>(BookCategory.Category.Manga.ToString());
-            IBookRepository recommendationsRepository = App.Container.Resolve<IBookRepository>(BookCategory.Category.Recommendation.ToString());
             
             m_viewModel = App.Container.Resolve<HomeDetailViewModel>();
-            m_viewModel.addMangaList(new BookPreviewItemListViewModel(mangaRepository, messaging));
-            m_viewModel.addRecommendationList(new BookPreviewItemListViewModel(recommendationsRepository, messaging));
+            m_viewModel.addMangaList(App.Container.Resolve<BookPreviewItemListViewModel>(BookCategory.Category.Manga.ToString()));
+            m_viewModel.addRecommendationList(App.Container.Resolve<BookPreviewItemListViewModel>(BookCategory.Category.Recommendation.ToString()));
             m_viewModel.loadItems();
             
             BindingContext = m_viewModel;
-            
+
+            IMessageQueue messaging = App.Container.Resolve<IMessageQueue>();
             messaging.Subscribe<BookPreviewItemViewModel, BookPreviewItem>(this, BookPreviewItemViewModel.ShowItemMessage, async (sender, selectedItem) =>
             {
 

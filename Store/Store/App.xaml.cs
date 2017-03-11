@@ -53,12 +53,19 @@ namespace Store.Ui
                 )
             );
 
-            //container.RegisterType<BookViewModel>(
-            //    new InjectionConstructor(container.Resolve<IBookRepository>(BookCategory.Category.Recommendation.ToString())),
-            //    new InjectionConstructor(container.Resolve<IReviewRepository>()),
-            //    new InjectionConstructor(container.Resolve<IMessageQueue>()),
-            //    new InjectionConstructor(container.Resolve<WriteReviewViewModel>())
-            //);
+            container.RegisterType<BookPreviewItemListViewModel>(BookCategory.Category.Recommendation.ToString(),
+                new InjectionConstructor(
+                    typeof(DataMock.RecommendationBookRepository),
+                    typeof(IMessageQueue)
+                )
+            );
+
+            container.RegisterType<BookPreviewItemListViewModel>(BookCategory.Category.Manga.ToString(),
+                new InjectionConstructor(
+                    typeof(DataMock.MangaBookRepository),
+                    typeof(IMessageQueue)
+                )   
+            );
 
         }
 

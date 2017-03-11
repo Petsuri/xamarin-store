@@ -5,7 +5,7 @@
              xmlns:views="clr-namespace:Store.Ui.View"
              xmlns:control="clr-namespace:Store.Ui.Control"
              xmlns:viewmodel="clr-namespace:Store.ViewModel;assembly=Store"
-             Title="HomeMasterPage">
+             Title="Petrin kauppa">
 
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
@@ -19,7 +19,9 @@
                HorizontalTextAlignment="Start"
                FontAttributes="Bold" />
 
-        <ScrollView Orientation="Horizontal" Scrolled="BookRecommendationsScrolled">
+        <ScrollView Orientation="Horizontal" 
+                    Scrolled="BookRecommendationsScrolled"
+                    Padding="0, 0, 0, 10">
             <StackLayout Orientation="Horizontal"
                          BindingContext="{Binding Path=Recommendation}">
 
@@ -36,7 +38,8 @@
                HorizontalTextAlignment="Start"
                FontAttributes="Bold" />
 
-        <ScrollView Orientation="Horizontal" Scrolled="BookMangasScrolled">
+        <ScrollView Orientation="Horizontal" 
+                    Scrolled="BookMangasScrolled">
             <StackLayout Orientation="Horizontal"
                          BindingContext="{Binding Manga}">
 
