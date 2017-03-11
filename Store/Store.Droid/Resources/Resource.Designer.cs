@@ -2221,11 +2221,14 @@ namespace Store.Droid
 			// aapt resource value: 0x7f0200a7
 			public const int mr_ic_play_light = 2130837671;
 			
-			// aapt resource value: 0x7f0200a9
-			public const int notification_template_icon_bg = 2130837673;
+			// aapt resource value: 0x7f0200aa
+			public const int notification_template_icon_bg = 2130837674;
 			
 			// aapt resource value: 0x7f0200a8
 			public const int petrinkauppa = 2130837672;
+			
+			// aapt resource value: 0x7f0200a9
+			public const int splash_screen = 2130837673;
 			
 			static Drawable()
 			{
@@ -3552,6 +3555,9 @@ namespace Store.Droid
 			
 			// aapt resource value: 0x7f0a0173
 			public const int MainTheme_Base = 2131362163;
+			
+			// aapt resource value: 0x7f0a0175
+			public const int MyTheme_Splash = 2131362165;
 			
 			// aapt resource value: 0x7f0a0032
 			public const int Platform_AppCompat = 2131361842;
