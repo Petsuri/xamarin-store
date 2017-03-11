@@ -27,15 +27,22 @@ namespace Store.Ui.Common
 
 
             var photo = await CrossMedia.Current.TakePhotoAsync(photoOptions);
-
-            using (var ms = new MemoryStream())
+            var isPhotoTaken = (photo != null);
+            if (isPhotoTaken)
             {
-                using (var stream = photo.GetStream())
+                using (var ms = new MemoryStream())
                 {
-                    stream.CopyTo(ms);
-                    return ms.ToArray();
+                    using (var stream = photo.GetStream())
+                    {
+                        stream.CopyTo(ms);
+                        return ms.ToArray();
+                    }
                 }
             }
+            else
+            {
+                return null;
+            }            
         }
     }
 }

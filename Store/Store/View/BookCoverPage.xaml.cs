@@ -10,7 +10,6 @@ using Xamarin.Forms.Xaml;
 
 namespace Store.Ui.View
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BookCoverPage : ContentPage
     {
         public BookCoverPage(byte[] imageBytes)

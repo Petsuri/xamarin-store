@@ -28,21 +28,47 @@ namespace Store.ViewModel
         private bool m_isBusy = false;
         private int? m_currentBookId = null;
 
+        private ReviewViewModel m_newReview;
         private IBookRepository m_booksRepository;
         private IReviewRepository m_reviewRepository;
 
-        public BookViewModel(IBookRepository books, IReviewRepository reviews, IMessageQueue messaging)
+        public BookViewModel(IBookRepository bookRepository, IReviewRepository reviewRepository, IMessageQueue messaging, ReviewViewModel newReview)
         {
-            m_booksRepository = books;
-            m_reviewRepository = reviews;
+            m_booksRepository = bookRepository;
+            m_reviewRepository = reviewRepository;
+            NewReview = newReview;
             Reviews = new ObservableRangeCollection<Review>();
-
             ShowBookCover = new Command(() =>
             {
                 messaging.Send(this, ShowBookCoverMessage, Image);
             });
 
+            SubmitNewReview = new Command(
+                execute: async () =>
+            {
+                var review = newReview.getReview();
+                await reviewRepository.saveReview(m_currentBookId.Value, review);
+
+                Reviews.Add(review);
+
+                newReview.clear();
+
+            }, canExecute: () =>
+            {
+                return NewReview.isValid() && m_currentBookId.HasValue;
+            });
+
+            newReview.PropertyChanged += (sender, args) =>
+            {
+                updateCanNewReviewBeSaved();
+            };
         }
+
+        private void updateCanNewReviewBeSaved()
+        {
+            (SubmitNewReview as Command).ChangeCanExecute();
+        }
+        
 
         public async void load(int bookId)
         {
@@ -50,6 +76,8 @@ namespace Store.ViewModel
             if (loadSelectedBook)
             {
                 m_currentBookId = bookId;
+                updateCanNewReviewBeSaved();
+
                 IsBusy = true;
 
                 var book = await m_booksRepository.load(bookId);
@@ -132,8 +160,15 @@ namespace Store.ViewModel
             set { SetProperty(ref m_reviewerCount, value); }
         }
 
+        public ReviewViewModel NewReview
+        {
+            get { return m_newReview; }
+            set { SetProperty(ref m_newReview, value); }
+        }
+
         public ObservableRangeCollection<Review> Reviews { get; private set; }
         public ICommand ShowBookCover { get; private set; }
+        public ICommand SubmitNewReview { get; private set; }
 
     }
 }

@@ -51,6 +51,7 @@
     <Compile Include="ViewModel\HomeMasterViewModel.cs" />
     <Compile Include="ViewModel\BookPreviewItemViewModel.cs" />
     <Compile Include="ViewModel\HomeDetailViewModel.cs" />
+    <Compile Include="ViewModel\ReviewViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>

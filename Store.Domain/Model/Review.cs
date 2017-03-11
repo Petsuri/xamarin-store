@@ -9,7 +9,7 @@ namespace Store.Model
     public class Review
     {
 
-        public int? ItemId { get; private set; }
+        public int? Id { get; private set; }
         public string UserName { get; set; }
         public string Text { get; set; }
         public DateTime Date { get; set; }
@@ -17,7 +17,7 @@ namespace Store.Model
         
         public Review(int? id)
         {
-            ItemId = id;
+            Id = id;
         }
 
     }

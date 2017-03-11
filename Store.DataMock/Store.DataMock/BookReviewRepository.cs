@@ -60,9 +60,12 @@ namespace Store.DataMock
 
 
 
-        public void saveReview(int itemId, Review review)
+        public async Task saveReview(int itemId, Review review)
         {
-            throw new NotImplementedException();
+
+            await Task.Delay(250);
+            m_bookReviews[itemId].Add(review);
+            
         }
     }
 }

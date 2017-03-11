@@ -11,7 +11,7 @@ namespace Store.Domain
     {
 
         Task<IEnumerable<Review>> loadReviews(int itemId);
-        void saveReview(int itemId, Review review);
+        Task saveReview(int itemId, Review review);
 
     }
 }

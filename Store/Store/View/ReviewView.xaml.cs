@@ -9,7 +9,6 @@ using Xamarin.Forms.Xaml;
 
 namespace Store.Ui.View
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewView : ContentView
     {
         public ReviewView()

@@ -13,8 +13,7 @@ using Store.ViewModel;
 
 namespace Store.Ui.View
 {
-
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    
     public partial class BookCarouselPage : CarouselPage
     {
 

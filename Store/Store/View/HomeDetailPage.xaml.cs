@@ -11,8 +11,7 @@ using Store.Domain;
 
 namespace Store.Ui.View
 {
-
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    
     public partial class HomeDetailPage : ContentPage
     {
         private HomeDetailViewModel m_home;
@@ -36,6 +35,13 @@ namespace Store.Ui.View
 
             messaging.Subscribe<BookPreviewItemViewModel, BookPreviewItem>(this, BookPreviewItemViewModel.ShowOptionsMessage, async (sender, selectedItem) =>
             {
+
+                var camera = App.Container.Resolve<ICamera>();
+                if (camera.isTakePhotoSupported())
+                {
+                    await camera.takePhoto();
+
+                }
 
                 string[] buttons = { "Katso", "Ei kiinnosta" };
                 var selectedAction = await DisplayActionSheet("Toiminnot", null, null, buttons);
