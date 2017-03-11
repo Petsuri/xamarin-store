@@ -12,6 +12,7 @@ namespace Store.Model
         public byte[] ImageFile { get; set; }
         public string Name { get; set; }
         public decimal UserScore { get; set; }
+        public BookCategory Category { get; set; }
 
         public BookPreviewItem(int id)
         {

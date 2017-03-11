@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using Microsoft.Practices.Unity;
 using Store.Domain;
 using Store.ViewModel;
+using Store.Model;
 
 namespace Store.Ui.View
 {
@@ -20,12 +21,12 @@ namespace Store.Ui.View
         public int BookId { get; private set; }
 
         
-        public BookPage(int bookId)
+        public BookPage(int bookId, BookCategory.Category category)
         {
             InitializeComponent();
             this.BookId = bookId;
-
-            m_model = App.Container.Resolve<BookViewModel>();
+            
+            m_model = App.Container.Resolve<BookViewModel>(category.ToString());
             BindingContext = m_model;
 
         }

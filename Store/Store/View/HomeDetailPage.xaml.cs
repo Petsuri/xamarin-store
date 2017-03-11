@@ -8,29 +8,37 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections;
 using Store.Domain;
+using System;
 
 namespace Store.Ui.View
 {
     
     public partial class HomeDetailPage : ContentPage
     {
-        private HomeDetailViewModel m_home;
+        private HomeDetailViewModel m_viewModel;
         
         public HomeDetailPage()
         {
             InitializeComponent();
 
-            m_home = App.Container.Resolve<HomeDetailViewModel>();
-            BindingContext = m_home;
-
-            IBookRepository books = App.Container.Resolve<IBookRepository>();
             IMessageQueue messaging = App.Container.Resolve<IMessageQueue>();
+            IBookRepository mangaRepository = App.Container.Resolve<IBookRepository>(BookCategory.Category.Manga.ToString());
+            IBookRepository recommendationsRepository = App.Container.Resolve<IBookRepository>(BookCategory.Category.Recommendation.ToString());
+            
+            m_viewModel = App.Container.Resolve<HomeDetailViewModel>();
+            m_viewModel.addMangaList(new BookPreviewItemListViewModel(mangaRepository, messaging));
+            m_viewModel.addRecommendationList(new BookPreviewItemListViewModel(recommendationsRepository, messaging));
+            m_viewModel.loadItems();
+            
+            BindingContext = m_viewModel;
+            
             messaging.Subscribe<BookPreviewItemViewModel, BookPreviewItem>(this, BookPreviewItemViewModel.ShowItemMessage, async (sender, selectedItem) =>
             {
 
+                var books = App.Container.Resolve<IBookRepository>(selectedItem.Category.SelectedCategory.ToString());
                 var allPreviewIds = await books.loadAllPreviewItemIds();
-                await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds));
-
+                await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds, selectedItem.Category.SelectedCategory));
+                
             });
 
             messaging.Subscribe<BookPreviewItemViewModel, BookPreviewItem>(this, BookPreviewItemViewModel.ShowOptionsMessage, async (sender, selectedItem) =>
@@ -42,26 +50,30 @@ namespace Store.Ui.View
             });
             
         }
-        
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            m_home.loadNextBooks();
-        }
+       
 
         private void BookRecommendationsScrolled(object sender, ScrolledEventArgs e)
-        {
-            var currentScrollView = (ScrollView)sender; 
-
-            bool isScrolledToRightEnd = (currentScrollView.ScrollX >= (currentScrollView.ContentSize.Width - currentScrollView.Width));
-            if (isScrolledToRightEnd)
+        {            
+            if (isScrollectToRightEnd((ScrollView)sender))
             {
-                m_home.loadNextBooks();
+                m_viewModel.Recommendation.loadNextBooks();
             }
-
-
         }
-                
+
+        private void BookMangasScrolled(object sender, ScrolledEventArgs e)
+        {
+            if (isScrollectToRightEnd((ScrollView)sender))
+            {
+                m_viewModel.Manga.loadNextBooks();
+            }
+        }
+
+
+        private bool isScrollectToRightEnd(ScrollView sv)
+        {
+            return (sv.ScrollX >= (sv.ContentSize.Width - sv.Width));
+        }
+
     }
     
 }

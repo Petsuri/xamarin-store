@@ -28,11 +28,11 @@ namespace Store.ViewModel
         private bool m_isBusy = false;
         private int? m_currentBookId = null;
 
-        private ReviewViewModel m_newReview;
+        private WriteReviewViewModel m_newReview;
         private IBookRepository m_booksRepository;
         private IReviewRepository m_reviewRepository;
 
-        public BookViewModel(IBookRepository bookRepository, IReviewRepository reviewRepository, IMessageQueue messaging, ReviewViewModel newReview)
+        public BookViewModel(IBookRepository bookRepository, IReviewRepository reviewRepository, IMessageQueue messaging, WriteReviewViewModel newReview)
         {
             m_booksRepository = bookRepository;
             m_reviewRepository = reviewRepository;
@@ -160,7 +160,7 @@ namespace Store.ViewModel
             set { SetProperty(ref m_reviewerCount, value); }
         }
 
-        public ReviewViewModel NewReview
+        public WriteReviewViewModel NewReview
         {
             get { return m_newReview; }
             set { SetProperty(ref m_newReview, value); }

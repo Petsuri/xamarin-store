@@ -18,11 +18,11 @@ namespace Store.Ui.View
     {
 
 
-        public BookCarouselPage(int selectedBookId, IEnumerable<int> allBookIds)
+        public BookCarouselPage(int selectedBookId, IEnumerable<int> allBookIds, BookCategory.Category selectedBookCategory)
         {
             InitializeComponent();
             
-            setChildrenPages(selectedBookId, allBookIds);
+            setChildrenPages(selectedBookId, allBookIds, selectedBookCategory);
 
             var messaging = App.Container.Resolve<IMessageQueue>();
             messaging.Subscribe<BookViewModel, byte[]>(this, BookViewModel.ShowBookCoverMessage, async (sender, imageBytes) =>
@@ -31,13 +31,13 @@ namespace Store.Ui.View
             });
         }
 
-        private void setChildrenPages(int selectedBookId, IEnumerable<int> allBookIds)
+        private void setChildrenPages(int selectedBookId, IEnumerable<int> allBookIds, BookCategory.Category selectedBookCategory)
         {
 
             IList<BookPage> allBookPages = new List<BookPage>();
             foreach (var id in allBookIds)
             {
-                allBookPages.Add(new BookPage(id));
+                allBookPages.Add(new BookPage(id, selectedBookCategory));
             }
 
             foreach (var page in allBookPages)

@@ -11,62 +11,36 @@ namespace Store.ViewModel
 {
     public class HomeDetailViewModel : ViewModelBase
     {
-        private const int LoadItemsCount = 5;
 
-        private bool m_isBusy;
 
         private readonly IMessageQueue m_messaging;
-        private readonly IBookRepository m_bookStore;
+               
 
-        private int m_currentBookItemIndex;
-        private bool m_searchForMoreBooks;
-
-        
-
-        public HomeDetailViewModel(IBookRepository bookStore, IMessageQueue messaging)
+        public HomeDetailViewModel(IMessageQueue messaging)
         {
-            m_searchForMoreBooks = true;
-            m_currentBookItemIndex = 0;
-
-            m_bookStore = bookStore;
             m_messaging = messaging;
+        }
 
-            Books = new ObservableRangeCollection<BookPreviewItemViewModel>();
+        public void addRecommendationList(BookPreviewItemListViewModel r)
+        {
+            Recommendation = r;
+        }
+
+        public void addMangaList(BookPreviewItemListViewModel m)
+        {
+            Manga = m;
+        }
+        
+        public void loadItems()
+        {
+
+            Recommendation.loadNextBooks();
+            Manga.loadNextBooks();
 
         }
         
-        public async void loadNextBooks()
-        {
-            if (!m_searchForMoreBooks || IsBusy)
-            {
-                return;
-            }
-
-            IsBusy = true;
-
-            IEnumerable<BookPreviewItem> loadedBooks = await m_bookStore.loadPreviewItems(m_currentBookItemIndex, LoadItemsCount);
-            m_currentBookItemIndex += loadedBooks.Count();
-            m_searchForMoreBooks = (loadedBooks.Count() == LoadItemsCount);
-
-
-            var bookViewModels = new List<BookPreviewItemViewModel>();
-            foreach(var book in loadedBooks)
-            {
-                bookViewModels.Add(new BookPreviewItemViewModel(book, m_messaging));
-            }
-
-            Books.AddRange(bookViewModels);
-
-            IsBusy = false;
-        }
-
-        public bool IsBusy
-        {
-            get { return m_isBusy; }
-            set { SetProperty(ref m_isBusy, value); }
-        }
-
-        public ObservableRangeCollection<BookPreviewItemViewModel> Books { get; private set; }
+        public BookPreviewItemListViewModel Recommendation { get; private set; }
+        public BookPreviewItemListViewModel Manga { get; private set; }
 
     }
 }
