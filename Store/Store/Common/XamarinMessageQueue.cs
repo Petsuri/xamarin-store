@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace Store.Ui.Common
 {
-    class XamarinMessageQueue : IMessageQueue
+    internal class XamarinMessageQueue : IMessageQueue
     {
         public void Send<TSender>(TSender sender, string message) where TSender : class
         {

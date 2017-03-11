@@ -1,18 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:Store.Ui.Converter"
              x:Class="Store.Ui.View.ReviewView">
 
-    <StackLayout Orientation="Vertical">
+    <Grid>
 
-        <Label Text="{Binding UserName, Mode=OneWay}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+
+        <Label Grid.Row="0" 
+               Text="{Binding UserName, Mode=OneWay}"
                FontAttributes="Bold" />
-        <Label Text="{Binding Date, Mode=OneWay, StringFormat='{0:d.M.yyyy}'}" />
 
-        <Label Text="{Binding Text, Mode=OneWay}"
+        <StackLayout Grid.Row="1" 
+                     Orientation="Horizontal">
+
+            <Label Text="{Binding Score}" />
+            <Image Source="ic_star_black_18dp.png" />
+
+            <Label Text="{Binding Date, 
+                                  Mode=OneWay, 
+                                  StringFormat='{0:d.M.yyyy}'}" />
+            
+        </StackLayout>
+
+        <Label Grid.Row="2" 
+               Text="{Binding Text, Mode=OneWay}"
                VerticalOptions="Fill" />
 
-    </StackLayout>
-    
+
+        <Image Grid.Row="3"
+               WidthRequest="300"
+               IsVisible="{Binding Path=Photo,
+                                   Mode=OneWay,
+                                   Converter={converter:BytesToBooleanConverter}}"
+               Source="{Binding Path=Photo,
+                                Mode=OneWay,
+                                Converter={converter:BytesToImageConverter}}" />
+
+    </Grid>
     
 </ContentView>

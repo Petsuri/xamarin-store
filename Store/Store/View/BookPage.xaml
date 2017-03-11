@@ -77,7 +77,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <StackLayout Grid.Row="0" Grid.Column="0"
                          Orientation="Vertical">
 
@@ -122,7 +122,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
+
                 <Label Grid.Row="0"
                    Text="{Binding Description, Mode=OneWay}"
                    Style="{DynamicResource CaptionStyle}" />
@@ -134,8 +134,8 @@
                    FontAttributes="Bold"/>
 
                 <control:ElementList Grid.Row="2"
-                                 x:TypeArguments="views:ReviewView, model:Review"
-                                 ElementsSource="{Binding Reviews, Mode=TwoWay}" />
+                                     x:TypeArguments="views:ReviewView, model:Review"
+                                     ElementsSource="{Binding Reviews, Mode=OneWay}" />
             </Grid>
 
 
@@ -148,7 +148,7 @@
 
                         <TableSection Title="Arvioi tämä kirja">
                             <ViewCell>
-                                   <Grid>
+                                <Grid>
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -205,7 +205,7 @@
                                                 <TapGestureRecognizer NumberOfTapsRequired="1"
                                                                       Command="{Binding Path=NewReview.TakePhoto}" />
                                             </Image.GestureRecognizers>
-                                                
+
                                         </Image>
 
                                     </StackLayout>
@@ -215,26 +215,14 @@
                                             Text="Lähetä"
                                             Command="{Binding SubmitNewReview}"/>
 
-                                </Grid>    
+                                </Grid>
                             </ViewCell>
                         </TableSection>
                     </TableRoot>
                 </TableView>
-                
 
             </Grid>
-
-  
-            
-            
-
         </Grid>
-
-       
-        
-        
     </ScrollView>
-
-
 
 </ContentPage>

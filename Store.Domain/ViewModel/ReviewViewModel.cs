@@ -19,6 +19,7 @@ namespace Store.ViewModel
 
         public ReviewViewModel(ICamera camera)
         {
+            clear();
 
             TakePhoto = new Command(
                 execute: async () =>
@@ -33,7 +34,13 @@ namespace Store.ViewModel
 
         public Review getReview()
         {
-            return new Review(null) { UserName = "Tuleva mobiilikehittäjä", Text = this.Text, Date = DateTime.Now, Score = Score };
+            return new Review(null) {
+                UserName = "Tuleva mobiilikehittäjä",
+                Text = Text,
+                Date = DateTime.Now,
+                Score = Score,
+                Photo = Photo
+            };
         }
 
         public bool isValid()

@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Store.Ui.Common
 {
-    public class Camera : ICamera
+    internal class Camera : ICamera
     {
         public bool isTakePhotoSupported()
         {

@@ -14,6 +14,7 @@ namespace Store.Model
         public string Text { get; set; }
         public DateTime Date { get; set; }
         public int Score { get; set; }
+        public byte[] Photo { get; set; }
         
         public Review(int? id)
         {

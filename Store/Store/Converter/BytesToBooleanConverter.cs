@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,21 +8,19 @@ using Xamarin.Forms;
 
 namespace Store.Ui.Converter
 {
-    internal class BytesToImageConverter : IValueConverter
+    internal class BytesToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            var imageBytes = value as byte[];
-            if (imageBytes != null)
+            var bytes = (value as byte[]);
+            if (bytes != null)
             {
-                return ImageSource.FromStream(() => { return new MemoryStream(imageBytes); });
-
+                return true;
             }else
             {
-                return null;
+                return false;
             }
-            
 
         }
 

@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="Common\Camera.cs" />
     <Compile Include="Control\ElementList.cs" />
+    <Compile Include="Converter\BytesToBooleanConverter.cs" />
     <Compile Include="Converter\BytesToImageConverter.cs" />
     <Compile Include="View\BookCoverPage.xaml.cs">
       <DependentUpon>BookCoverPage.xaml</DependentUpon>
