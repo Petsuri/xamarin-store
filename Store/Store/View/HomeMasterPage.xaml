@@ -8,29 +8,25 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <Image Source="bookstore.png" />
 
-            <ListView ItemsSource="{Binding Items}" 
-                      SeparatorVisibility="None"
-                      HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
+            <TableView Intent="Menu">
+                <TableRoot>
+                    <TableSection Title="Oma kirjasto">
+                        <ImageCell Text="Suosikit"/>
+                        <ImageCell Text="Kaikki" />
+                        <ImageCell Text="Toivelista" />
+                    </TableSection>
 
-                                <Image Source="{Binding IconSource}" 
-                                       HorizontalOptions="Start" 
-                                       VerticalOptions="Start"/>
+                    <TableSection>
+                        <ImageCell Text="Asetukset" />
+                    </TableSection>
 
-                                <Label Text="{Binding Title}" 
-                                       HorizontalTextAlignment="Start" 
-                                       VerticalTextAlignment="Start"/>
+                    <TableSection>
+                        <ImageCell Text="Kirjaudu ulos" />
+                    </TableSection>
 
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </TableRoot>
+            </TableView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

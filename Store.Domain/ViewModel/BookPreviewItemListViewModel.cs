@@ -1,10 +1,8 @@
 ﻿using Store.Domain;
 using Store.Model;
-using System;
+using Store.Repository;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.ViewModel
 {

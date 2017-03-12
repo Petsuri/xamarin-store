@@ -2,17 +2,14 @@
 using Store.Model;
 using Store.ViewModel;
 using Microsoft.Practices.Unity;
-using System.Collections.Specialized;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using System.Collections;
 using Store.Domain;
-using System;
+using Store.Repository;
 
 namespace Store.Ui.View
 {
-    
+
     public partial class HomeDetailPage : ContentPage
     {
         private HomeDetailViewModel m_viewModel;

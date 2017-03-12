@@ -39,8 +39,8 @@
     <Compile Include="Domain\IApplication.cs" />
     <Compile Include="Domain\ICamera.cs" />
     <Compile Include="Domain\IMessageQueue.cs" />
-    <Compile Include="Domain\IBookRepository.cs" />
-    <Compile Include="Domain\IReviewRepository.cs" />
+    <Compile Include="Repository\IBookRepository.cs" />
+    <Compile Include="Repository\IReviewRepository.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\BookCategory.cs" />
     <Compile Include="Model\MasterPageItem.cs" />

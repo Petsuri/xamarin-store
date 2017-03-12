@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Store.Domain;
 using Store.Model;
+using Store.Repository;
 using Store.Ui.Common;
 using Store.Ui.View;
 using Store.ViewModel;
