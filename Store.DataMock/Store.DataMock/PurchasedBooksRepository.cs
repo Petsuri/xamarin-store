@@ -12,13 +12,15 @@ namespace Store.DataMock
     {
         private static List<Book> m_purchasedBooks = new List<Book>();
 
-        public void add(Book book)
+        public async Task add(Book book)
         {
+            await Task.Delay(250);
             m_purchasedBooks.Add(book);
         }
 
-        public IEnumerable<Book> loadAll()
+        public async Task<IEnumerable<Book>> loadAll()
         {
+            await Task.Delay(250);
             return m_purchasedBooks;
         }
     }
