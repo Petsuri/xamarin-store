@@ -27,7 +27,7 @@
                 </Image>
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Text="{Binding Name, Mode=OneWay}"
+                    <Label Text="{Binding Name}"
                            HorizontalTextAlignment="Start"
                            HorizontalOptions="StartAndExpand"
                            VerticalTextAlignment="Start"

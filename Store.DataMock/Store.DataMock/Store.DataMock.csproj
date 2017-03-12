@@ -34,9 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MangaBookRepository.cs" />
+    <Compile Include="PurchasedBooksRepository.cs" />
     <Compile Include="RecommendationBookRepository.cs" />
     <Compile Include="BookReviewRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Store.Domain\Store.csproj">

@@ -1,6 +1,7 @@
 ﻿using Store.Domain;
 using Store.Model;
 using Store.Repository;
+using Store.Service;
 using System;
 using System.Windows.Input;
 
@@ -10,17 +11,6 @@ namespace Store.ViewModel
     {
 
         public const string ShowBookCoverMessage = "showShowBookCover";
-
-        private byte[] m_image = null;
-        private string m_name = "";
-        private decimal m_userScore = 0m;
-
-        private string m_author = "";
-        private DateTime m_publishedDate = DateTime.MinValue;
-        private string m_description = "";
-        private decimal m_price = 0m;
-        private long m_purchasedCount = 0;
-        private long m_reviewerCount = 0;
         
         private bool m_isBusy = false;
         private int? m_currentBookId = null;
@@ -28,8 +18,13 @@ namespace Store.ViewModel
         private WriteReviewViewModel m_newReview;
         private IBookRepository m_booksRepository;
         private IReviewRepository m_reviewRepository;
+        private Book m_book;
 
-        public BookViewModel(IBookRepository bookRepository, IReviewRepository reviewRepository, IMessageQueue messaging, WriteReviewViewModel newReview)
+        public BookViewModel(IBookRepository bookRepository, 
+                             IReviewRepository reviewRepository, 
+                             IMessageQueue messaging, 
+                             WriteReviewViewModel newReview,
+                             PurchaseBookService purchaseService)
         {
             m_booksRepository = bookRepository;
             m_reviewRepository = reviewRepository;
@@ -37,35 +32,66 @@ namespace Store.ViewModel
             Reviews = new ObservableRangeCollection<Review>();
             ShowBookCover = new Command(() =>
             {
-                messaging.Send(this, ShowBookCoverMessage, Image);
+                messaging.Send(this, ShowBookCoverMessage, Book.Image);
             });
 
             SubmitNewReview = new Command(
-                execute: async () =>
-            {
-                var review = newReview.getReview();
-                await reviewRepository.saveReview(m_currentBookId.Value, review);
-
-                Reviews.Add(review);
-
-                newReview.clear();
-
-            }, canExecute: () =>
+                execute: submitReview,
+                canExecute: () =>
             {
                 return NewReview.isValid() && m_currentBookId.HasValue;
             });
 
+            BuyBook = new Command(
+                execute: () =>
+            {
+                purchaseService.purchase(Book);
+                increaseBookPurchasedCountBy(1);
+
+                ChangeCanCommanExecute(BuyBook);
+
+            }, canExecute: () =>
+            {
+                return Book != null && purchaseService.isMoneyEnoughForPurchase(Book);
+            });
+
             newReview.PropertyChanged += (sender, args) =>
             {
-                updateCanNewReviewBeSaved();
+                ChangeCanCommanExecute(SubmitNewReview);
             };
         }
 
-        private void updateCanNewReviewBeSaved()
+        private async void submitReview()
         {
-            (SubmitNewReview as Command).ChangeCanExecute();
+            var review = NewReview.getReview();
+            await m_reviewRepository.saveReview(m_currentBookId.Value, review);
+
+            Reviews.Add(review);
+
+            NewReview.clear();
+        }
+
+        private void ChangeCanCommanExecute(ICommand command)
+        {
+            var c = (command as Command);
+            if (c != null)
+            {
+                c.ChangeCanExecute();
+            }
+
+
         }
         
+        private void increaseBookPurchasedCountBy(int amount)
+        {
+
+            var currentBook = Book;
+            currentBook.PurchasedCount += amount;
+
+            Book = null;
+            Book = currentBook;
+
+        }
 
         public async void load(int bookId)
         {
@@ -73,21 +99,12 @@ namespace Store.ViewModel
             if (loadSelectedBook)
             {
                 m_currentBookId = bookId;
-                updateCanNewReviewBeSaved();
+                ChangeCanCommanExecute(SubmitNewReview);
 
                 IsBusy = true;
-
-                var book = await m_booksRepository.load(bookId);
-
-                Image = book.ImageFile;
-                Name = book.Name;
-                UserScore = book.UserScore;
-                Author = book.Author;
-                PublishedDate = book.PublishedDate;
-                Description = book.Description;
-                Price = book.Price;
-                PurchasedCount = book.PurchasedCount;
-                ReviewerCount = book.ReviewerCount;
+                
+                Book = await m_booksRepository.load(bookId);
+                ChangeCanCommanExecute(BuyBook);
 
                 var bookReviews = await m_reviewRepository.loadReviews(bookId);
                 Reviews.Clear();
@@ -97,66 +114,19 @@ namespace Store.ViewModel
             }
         }
 
+        public Book Book
+        {
+            get { return m_book;}
+            set { SetProperty(ref m_book, value); }
+        }
+
         public bool IsBusy
         {
             get { return m_isBusy; }
             set { SetProperty(ref m_isBusy, value); }
         }
 
-        public byte[] Image
-        {
-            get { return m_image; }
-            set { SetProperty(ref m_image, value); }
-        }
-
-        public string Name
-        {
-            get { return m_name; }
-            set { SetProperty(ref m_name, value); }
-        }
-
-        public decimal UserScore
-        {
-            get { return m_userScore; }
-            set { SetProperty(ref m_userScore, value); }
-        }
-
-        public string Author
-        {
-            get { return m_author; }
-            set { SetProperty(ref m_author, value); }
-        }
-
-        public DateTime PublishedDate
-        {
-            get { return m_publishedDate; }
-            set { SetProperty(ref m_publishedDate, value); }
-        }
-
-        public string Description
-        {
-            get { return m_description; }
-            set { SetProperty(ref m_description, value); }
-        }
-
-        public decimal Price
-        {
-            get { return m_price; }
-            set { SetProperty(ref m_price, value); }
-        }
-
-        public long PurchasedCount
-        {
-            get { return m_purchasedCount; }
-            set { SetProperty(ref m_purchasedCount, value); }
-        }
-
-        public long ReviewerCount
-        {
-            get { return m_reviewerCount; }
-            set { SetProperty(ref m_reviewerCount, value); }
-        }
-
+       
         public WriteReviewViewModel NewReview
         {
             get { return m_newReview; }
@@ -166,6 +136,7 @@ namespace Store.ViewModel
         public ObservableRangeCollection<Review> Reviews { get; private set; }
         public ICommand ShowBookCover { get; private set; }
         public ICommand SubmitNewReview { get; private set; }
+        public ICommand BuyBook { get; private set; }
 
     }
 }

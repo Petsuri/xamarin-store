@@ -9,7 +9,7 @@ namespace Store.Model
     public class BookPreviewItem
     {
         public int Id { get; private set; }
-        public byte[] ImageFile { get; set; }
+        public byte[] Image { get; set; }
         public string Name { get; set; }
         public decimal UserScore { get; set; }
         public BookCategory Category { get; set; }

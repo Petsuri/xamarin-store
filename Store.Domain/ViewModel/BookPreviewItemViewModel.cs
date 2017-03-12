@@ -21,7 +21,7 @@ namespace Store.ViewModel
 
         public BookPreviewItemViewModel(BookPreviewItem item, IMessageQueue messaging)
         {
-            m_image = item.ImageFile;
+            m_image = item.Image;
             m_name = item.Name;
             m_userScore = item.UserScore;
 

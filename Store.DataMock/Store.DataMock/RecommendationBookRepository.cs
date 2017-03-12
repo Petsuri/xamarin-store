@@ -40,7 +40,7 @@ namespace Store.DataMock
         {
             var book = new Book(id)
             {
-                ImageFile = loadImage(imageFileName),
+                Image = loadImage(imageFileName),
                 Author = author,
                 Name = name,
                 Price = randomPrice(),
