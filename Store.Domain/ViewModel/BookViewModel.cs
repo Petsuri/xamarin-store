@@ -30,10 +30,15 @@ namespace Store.ViewModel
             m_reviewRepository = reviewRepository;
             NewReview = newReview;
             Reviews = new ObservableRangeCollection<Review>();
-            ShowBookCover = new Command(() =>
+            ShowBookCover = new Command(
+                execute: () =>
             {
                 messaging.Send(this, ShowBookCoverMessage, Book.Image);
-            });
+            }, canExecute: () =>
+            {
+                return Book != null && Book.Image != null;
+            }
+            );
 
             SubmitNewReview = new Command(
                 execute: submitReview,
@@ -105,6 +110,7 @@ namespace Store.ViewModel
                 
                 Book = await m_booksRepository.load(bookId);
                 ChangeCanCommanExecute(BuyBook);
+                ChangeCanCommanExecute(ShowBookCover);
 
                 var bookReviews = await m_reviewRepository.loadReviews(bookId);
                 Reviews.Clear();
