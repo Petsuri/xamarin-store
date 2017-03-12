@@ -26,27 +26,19 @@
                     </Image.Source>
                 </Image>
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" 
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="StartAndExpand">
                     <Label Text="{Binding Name}"
                            HorizontalTextAlignment="Start"
-                           HorizontalOptions="StartAndExpand"
-                           VerticalTextAlignment="Start"
                            FontSize="Micro" />
-                    
-                    <Image HorizontalOptions="EndAndExpand"
-                           VerticalOptions="Start"
-                           BackgroundColor="Transparent"
-                           Source="ic_toc_black_24dp.png">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                  Command="{Binding ShowOptions}"/>
-                        </Image.GestureRecognizers>
-                    </Image>
-
                 </StackLayout>
 
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal"
+                             VerticalOptions="EndAndExpand"
+                             HorizontalOptions="Start">
                     <Label Text="{Binding UserScore, StringFormat='{0:0.0}'}" />
+                    <Image Source="ic_star_black_18dp.png" />
                 </StackLayout>
             </StackLayout>
         </Frame>

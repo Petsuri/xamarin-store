@@ -29,11 +29,7 @@ namespace Store.ViewModel
             {
                 messaging.Send(this, ShowItemMessage, item);
             });
-
-            ShowOptions = new Command(() =>
-            {
-                messaging.Send(this, ShowOptionsMessage, item);
-            });
+            
         }
 
         public byte[] Image
@@ -55,8 +51,6 @@ namespace Store.ViewModel
         }
 
         public ICommand ShowSelectedItem { get; private set; }
-        public ICommand ShowOptions { get; private set; }
-
 
     }
 }

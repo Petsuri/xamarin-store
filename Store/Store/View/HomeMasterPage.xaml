@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Store.Ui.View.HomeMasterPage"
-             Title="Detail"
-             Padding="20">
+             Title="Detail">
 
     <ContentPage.Content>
         <StackLayout>
@@ -12,8 +11,7 @@
             <TableView Intent="Menu">
                 <TableRoot>
                     <TableSection Title="Oma kirjasto">
-                        <ImageCell Text="Suosikit"/>
-                        <ImageCell Text="Kaikki" />
+                        <ImageCell Text="Ostetut" Tapped="ImageCell_Tapped"/>
                         <ImageCell Text="Toivelista" />
                     </TableSection>
 

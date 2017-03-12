@@ -10,8 +10,8 @@ namespace Store.Repository
     public interface IPurchasedBooksRepository
     {
 
-        void add(Book book);
-        IEnumerable<Book> loadAll();
+        Task add(Book book);
+        Task<IEnumerable<Book>> loadAll();
 
     }
 }

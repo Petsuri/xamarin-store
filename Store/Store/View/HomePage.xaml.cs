@@ -13,7 +13,7 @@ namespace Store.Ui.View
         {
             InitializeComponent();
 
-            Detail = new NavigationPage(new HomeDetailPage());
+            Detail = new HomeDetailPage();
             Master = new HomeMasterPage();
 
         }

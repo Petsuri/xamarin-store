@@ -34,14 +34,6 @@ namespace Store.Ui.View
                 await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds, selectedItem.Category.SelectedCategory));
                 
             });
-
-            messaging.Subscribe<BookPreviewItemViewModel, BookPreviewItem>(this, BookPreviewItemViewModel.ShowOptionsMessage, async (sender, selectedItem) =>
-            {
-                
-                string[] buttons = { "Katso", "Ei kiinnosta" };
-                var selectedAction = await DisplayActionSheet("Toiminnot", null, null, buttons);
-                
-            });
             
         }
        
