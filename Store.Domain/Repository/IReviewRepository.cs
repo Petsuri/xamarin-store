@@ -10,8 +10,8 @@ namespace Store.Repository
     public interface IReviewRepository
     {
 
-        Task<IEnumerable<Review>> loadReviews(int itemId);
-        Task saveReview(int itemId, Review review);
+        Task<IEnumerable<Review>> loadReviewsAsync(int itemId);
+        Task saveReviewAsync(int itemId, Review review);
 
     }
 }

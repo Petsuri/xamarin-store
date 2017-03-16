@@ -99,19 +99,19 @@ namespace Store.DataMock
             return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a condimentum libero. Sed sed sem in mauris mattis placerat. Integer id pulvinar risus. Praesent ultricies porta tortor, id commodo erat cursus quis. Nullam a cursus enim, non facilisis est. Sed euismod sagittis ligula, id tempor turpis ornare ut. Donec eget porttitor nunc. Donec euismod viverra elit eu pharetra.";
         }
 
-        public async Task<IEnumerable<BookPreviewItem>> loadPreviewItems(int startFrom, int takeCount)
+        public async Task<IEnumerable<BookPreviewItem>> loadPreviewItemsAsync(int startFrom, int takeCount)
         {
             await Task.Delay(500);
             return MangaPreviewItems.Skip(startFrom).Take(takeCount).ToList();
         }
 
-        public async Task<Book> load(int id)
+        public async Task<Book> loadAsync(int id)
         {
             await Task.Delay(500);
             return MangaPreviewItems.Where(m => m.Id == id).First();
         }
 
-        public async Task<IEnumerable<int>> loadAllPreviewItemIds()
+        public async Task<IEnumerable<int>> loadAllPreviewItemIdsAsync()
         {
             await Task.Delay(250);
             return MangaPreviewItems.Select(book => book.Id).ToList();

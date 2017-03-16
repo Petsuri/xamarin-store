@@ -17,7 +17,7 @@ namespace Store.Ui.Common
             return CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported;
         }
 
-        public async Task<byte[]> takePhoto()
+        public async Task<byte[]> takePhotoAsync()
         {
             var photoOptions = new StoreCameraMediaOptions()
             {

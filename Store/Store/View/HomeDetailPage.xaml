@@ -5,48 +5,60 @@
              xmlns:views="clr-namespace:Store.Ui.View"
              xmlns:control="clr-namespace:Store.Ui.Control"
              xmlns:viewmodel="clr-namespace:Store.ViewModel;assembly=Store"
+             IsEnabled="False"
              Title="Petrin kauppa">
 
-    <StackLayout Orientation="Vertical">
+    <AbsoluteLayout>
 
-        <Label Text="Suosittelemme sinulle"
-               HorizontalTextAlignment="Start"
-               FontAttributes="Bold" />
+        <StackLayout Orientation="Vertical"
+                     AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                     AbsoluteLayout.LayoutFlags="All">
 
-        <ScrollView Orientation="Horizontal" 
-                    Scrolled="BookRecommendationsScrolled"
-                    Padding="0, 0, 0, 10">
-            <StackLayout Orientation="Horizontal"
-                         BindingContext="{Binding Path=Recommendation}">
+            <Label Text="Suosittelemme sinulle"
+                   HorizontalTextAlignment="Start"
+                   FontAttributes="Bold" />
 
-                <control:ElementList Orientation="Horizontal"
-                                     x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewItemViewModel"
-                                     ElementsSource="{Binding Path=Books, Mode=OneWay}" />
+            <ScrollView Orientation="Horizontal" 
+                        Scrolled="BookRecommendationsScrolled"
+                        Padding="0, 0, 0, 10">
+                <StackLayout Orientation="Horizontal"
+                             BindingContext="{Binding Path=Recommendation}">
 
-                <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 
-                                   IsRunning="{Binding Path=IsBusy, Mode=OneWay}" />
-            </StackLayout>
-        </ScrollView>
+                    <control:ElementList Orientation="Horizontal" IsEnabled="False"
+                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewItemViewModel"
+                                         ElementsSource="{Binding Path=Books, Mode=OneWay}" />
 
-        <Label Text="Mangaa suoraan Jaappanista"
-               HorizontalTextAlignment="Start"
-               FontAttributes="Bold" />
+                    <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 
+                                       IsRunning="{Binding Path=IsBusy, Mode=OneWay}" />
+                </StackLayout>
+            </ScrollView>
 
-        <ScrollView Orientation="Horizontal" 
-                    Scrolled="BookMangasScrolled">
-            <StackLayout Orientation="Horizontal"
-                         BindingContext="{Binding Manga}">
+            <Label Text="Mangaa suoraan Jaappanista"
+                   HorizontalTextAlignment="Start"
+                   FontAttributes="Bold" />
 
-                <control:ElementList Orientation="Horizontal"
-                                     x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewItemViewModel"
-                                     ElementsSource="{Binding Path=Books, Mode=OneWay}" />
+            <ScrollView Orientation="Horizontal" 
+                        Scrolled="BookMangasScrolled">
+                <StackLayout Orientation="Horizontal"
+                             BindingContext="{Binding Manga}">
 
-                <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 
-                                   IsRunning="{Binding Path=IsBusy, Mode=OneWay}" />
-            </StackLayout>
-        </ScrollView>
+                    <control:ElementList Orientation="Horizontal"
+                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewItemViewModel"
+                                         ElementsSource="{Binding Path=Books, Mode=OneWay}" />
+
+                    <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 
+                                       IsRunning="{Binding Path=IsBusy, Mode=OneWay}" />
+                </StackLayout>
+            </ScrollView>
 
 
-    </StackLayout>
+        </StackLayout>
+
+        <ActivityIndicator IsVisible="{Binding Path=IsBusy}"
+                           IsRunning="{Binding Path=IsBusy}"
+                           AbsoluteLayout.LayoutBounds=".5, .5, 100, 100"
+                           AbsoluteLayout.LayoutFlags="PositionProportional"/>
+
+    </AbsoluteLayout>
 
 </ContentPage>

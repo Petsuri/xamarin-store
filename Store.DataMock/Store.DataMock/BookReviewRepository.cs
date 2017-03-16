@@ -13,7 +13,7 @@ namespace Store.DataMock
         private static Dictionary<int, List<Review>> m_bookReviews = new Dictionary<int, List<Review>>();
 
 
-        public async Task<IEnumerable<Review>> loadReviews(int itemId)
+        public async Task<IEnumerable<Review>> loadReviewsAsync(int itemId)
         {
             if (!m_bookReviews.ContainsKey(itemId))
             {
@@ -58,7 +58,7 @@ namespace Store.DataMock
 
 
 
-        public async Task saveReview(int itemId, Review review)
+        public async Task saveReviewAsync(int itemId, Review review)
         {
 
             await Task.Delay(250);

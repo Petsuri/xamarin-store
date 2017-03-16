@@ -10,10 +10,10 @@ namespace Store.Repository
     public interface IBookRepository
     {
 
-        Task<IEnumerable<int>> loadAllPreviewItemIds();
-        Task<IEnumerable<BookPreviewItem>> loadPreviewItems(int startFrom, int takeCount);
+        Task<IEnumerable<int>> loadAllPreviewItemIdsAsync();
+        Task<IEnumerable<BookPreviewItem>> loadPreviewItemsAsync(int startFrom, int takeCount);
 
-        Task<Book> load(int id);
+        Task<Book> loadAsync(int id);
 
     }
 }

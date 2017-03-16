@@ -14,11 +14,13 @@ namespace Store.ViewModel
 
 
         private readonly IMessageQueue m_messaging;
+        private bool m_isBusy;
                
 
         public HomeDetailViewModel(IMessageQueue messaging)
         {
             m_messaging = messaging;
+            m_isBusy = false;
         }
 
         public void addRecommendationList(BookPreviewItemListViewModel r)
@@ -33,14 +35,32 @@ namespace Store.ViewModel
         
         public void loadItems()
         {
-
-            Recommendation.loadNextBooks();
+            IsBusy = true;
             Manga.loadNextBooks();
+            Recommendation.loadNextBooks();
+            IsBusy = false;
+        }
 
+        public bool IsBusy
+        {
+            get { return m_isBusy; }
+            set { SetProperty(ref m_isBusy, value); }
+        }
+
+        public void disableSelections()
+        {
+            Manga.disableSelection();
+            Recommendation.disableSelection();
+        }
+
+        public void enableSelections()
+        {
+            Manga.enableSelection();
+            Recommendation.enableSelection();
         }
         
-        public BookPreviewItemListViewModel Recommendation { get; private set; }
         public BookPreviewItemListViewModel Manga { get; private set; }
+        public BookPreviewItemListViewModel Recommendation { get; private set; }
 
     }
 }

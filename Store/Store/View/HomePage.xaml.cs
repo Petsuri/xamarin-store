@@ -13,9 +13,11 @@ namespace Store.Ui.View
         {
             InitializeComponent();
 
-            Detail = new HomeDetailPage();
-            Master = new HomeMasterPage();
+            var navigation = new NavigationPage(new HomeDetailPage());
 
+            Detail = navigation;
+            Master = new HomeMasterPage(navigation.Navigation);
+            
         }
 
         protected override bool OnBackButtonPressed()

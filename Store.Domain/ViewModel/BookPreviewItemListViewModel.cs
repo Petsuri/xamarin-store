@@ -41,7 +41,7 @@ namespace Store.ViewModel
 
             IsBusy = true;
 
-            IEnumerable<BookPreviewItem> loadedBooks = await m_bookStore.loadPreviewItems(m_currentBookItemIndex, LoadItemsCount);
+            IEnumerable<BookPreviewItem> loadedBooks = await m_bookStore.loadPreviewItemsAsync(m_currentBookItemIndex, LoadItemsCount);
             m_currentBookItemIndex += loadedBooks.Count();
             m_searchForMoreBooks = (loadedBooks.Count() == LoadItemsCount);
 
@@ -56,6 +56,24 @@ namespace Store.ViewModel
 
             IsBusy = false;
 
+        }
+
+        public void disableSelection()
+        {
+            changeBooksSelectableStatus(false);
+        }
+
+        public void enableSelection()
+        {
+            changeBooksSelectableStatus(true);
+        }
+
+        private void changeBooksSelectableStatus(bool isSelectable)
+        {
+            foreach(var book in Books)
+            {
+                book.IsSelectable = isSelectable;
+            }
         }
 
         public bool IsBusy

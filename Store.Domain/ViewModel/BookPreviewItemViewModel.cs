@@ -18,16 +18,22 @@ namespace Store.ViewModel
         private byte[] m_image;
         private string m_name;
         private decimal m_userScore;
+        private bool m_isSelectable;
 
         public BookPreviewItemViewModel(BookPreviewItem item, IMessageQueue messaging)
         {
             m_image = item.Image;
             m_name = item.Name;
             m_userScore = item.UserScore;
+            m_isSelectable = true;
 
-            ShowSelectedItem = new Command(() =>
+            ShowSelectedItem = new Command(
+                execute: () =>
             {
                 messaging.Send(this, ShowItemMessage, item);
+            }, canExecute: () => 
+            {
+                return IsSelectable;
             });
             
         }
@@ -48,6 +54,18 @@ namespace Store.ViewModel
         {
             get { return m_userScore; }
             set { SetProperty(ref m_userScore, value); }
+        }
+
+        public bool IsSelectable
+        {
+            get { return m_isSelectable; } 
+            set
+            {
+                if (SetProperty(ref m_isSelectable, value))
+                {
+                    (ShowSelectedItem as Command).ChangeCanExecute();
+                }
+            }
         }
 
         public ICommand ShowSelectedItem { get; private set; }

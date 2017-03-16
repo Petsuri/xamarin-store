@@ -29,7 +29,7 @@ namespace Store.Ui.View
         private async void showPurchasedBooks()
         {
             var repository = App.Container.Resolve<IPurchasedBooksRepository>();
-            var purchasedBooks = await repository.loadAll();
+            var purchasedBooks = await repository.loadAllAsync();
             var allBooks = purchasedBooks.ToList();
 
             if (allBooks.Any())
@@ -50,6 +50,16 @@ namespace Store.Ui.View
 
         private void display(IList<Book> books)
         {
+            booksGrid.RowDefinitions.Clear();
+            booksGrid.ColumnDefinitions.Clear();
+
+            var requiredNumberOfRows = (books.Count() / BooksPerRow) + 1;
+            for(var rowIndex = 0; rowIndex < requiredNumberOfRows; rowIndex++)
+            {
+                booksGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+            }
+            booksGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+
             for (var bookIndex = 0; bookIndex < books.Count(); bookIndex++)
             {
                 var currentBook = books[bookIndex];

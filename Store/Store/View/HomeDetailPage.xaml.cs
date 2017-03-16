@@ -28,11 +28,15 @@ namespace Store.Ui.View
             IMessageQueue messaging = App.Container.Resolve<IMessageQueue>();
             messaging.Subscribe<BookPreviewItemViewModel, BookPreviewItem>(this, BookPreviewItemViewModel.ShowItemMessage, async (sender, selectedItem) =>
             {
+                m_viewModel.IsBusy = true;
+                m_viewModel.disableSelections();
 
                 var books = App.Container.Resolve<IBookRepository>(selectedItem.Category.SelectedCategory.ToString());
-                var allPreviewIds = await books.loadAllPreviewItemIds();
+                var allPreviewIds = await books.loadAllPreviewItemIdsAsync();
                 await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds, selectedItem.Category.SelectedCategory));
-                
+
+                m_viewModel.IsBusy = false;
+                m_viewModel.enableSelections();
             });
             
         }

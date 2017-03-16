@@ -69,7 +69,7 @@ namespace Store.ViewModel
         private async void submitReview()
         {
             var review = NewReview.getReview();
-            await m_reviewRepository.saveReview(m_currentBookId.Value, review);
+            await m_reviewRepository.saveReviewAsync(m_currentBookId.Value, review);
 
             Reviews.Add(review);
 
@@ -108,11 +108,11 @@ namespace Store.ViewModel
 
                 IsBusy = true;
                 
-                Book = await m_booksRepository.load(bookId);
+                Book = await m_booksRepository.loadAsync(bookId);
                 ChangeCanCommanExecute(BuyBook);
                 ChangeCanCommanExecute(ShowBookCover);
 
-                var bookReviews = await m_reviewRepository.loadReviews(bookId);
+                var bookReviews = await m_reviewRepository.loadReviewsAsync(bookId);
                 Reviews.Clear();
                 Reviews.AddRange(bookReviews);
 

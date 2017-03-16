@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store.Domain
 {
-    public interface ICamera
+    interface IPageNavigation
     {
-        bool isTakePhotoSupported();
-        Task<byte[]> takePhotoAsync();
     }
 }

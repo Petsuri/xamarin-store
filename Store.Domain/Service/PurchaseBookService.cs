@@ -26,7 +26,7 @@ namespace Store.Service
             }
 
             m_wallet.deductAmount(selectedBook.Price);
-            m_purchasedBooks.add(selectedBook);
+            m_purchasedBooks.addAsync(selectedBook);
 
         }
         

@@ -9,16 +9,19 @@ namespace Store.Ui.View
 {
     public partial class HomeMasterPage : ContentPage
     {
-        public HomeMasterPage()
+        private INavigation m_navigation;
+
+        public HomeMasterPage(INavigation navigation)
         {
             InitializeComponent();
+            m_navigation = navigation;
 
             BindingContext = App.Container.Resolve<HomeMasterViewModel>();
         }
 
         private async void ImageCell_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new PurchasedBooksPage());    
+            await m_navigation.PushAsync(new PurchasedBooksPage());    
         }
     }
 }

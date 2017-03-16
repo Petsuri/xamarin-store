@@ -39,6 +39,7 @@
     <Compile Include="Domain\IApplication.cs" />
     <Compile Include="Domain\ICamera.cs" />
     <Compile Include="Domain\IMessageQueue.cs" />
+    <Compile Include="Domain\IPageNavigation.cs" />
     <Compile Include="Domain\IWallet.cs" />
     <Compile Include="Repository\IBookRepository.cs" />
     <Compile Include="Repository\IPurchasedBooksRepository.cs" />

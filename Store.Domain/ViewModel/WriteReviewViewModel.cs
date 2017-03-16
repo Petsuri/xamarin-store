@@ -15,7 +15,7 @@ namespace Store.ViewModel
         private int m_reviewScore;
         private string m_reviewText;
         private byte[] m_reviewPhoto;
-
+        private bool m_isTakingPhoto;
 
         public WriteReviewViewModel(ICamera camera)
         {
@@ -24,13 +24,16 @@ namespace Store.ViewModel
             TakePhoto = new Command(
                 execute: async () =>
             {
-                Photo = await camera.takePhoto();
+                IsTakingPhoto = true;
+                Photo = await camera.takePhotoAsync();
+                IsTakingPhoto = false;
             }, canExecute: () =>
             {
-                return camera.isTakePhotoSupported();
+                return camera.isTakePhotoSupported() && !IsTakingPhoto;
             });
             
         }
+
 
         public Review getReview()
         {
@@ -53,6 +56,7 @@ namespace Store.ViewModel
             Score = 1;
             Text = "";
             Photo = null;
+            m_isTakingPhoto = false;
         }
 
         public ICommand TakePhoto { get; private set; }
@@ -75,6 +79,17 @@ namespace Store.ViewModel
             set { SetProperty(ref m_reviewPhoto, value); }
         }
 
+        public bool IsTakingPhoto
+        {
+            get { return m_isTakingPhoto; }
+            set
+            {
+                if (SetProperty(ref m_isTakingPhoto, value))
+                {
+                    (TakePhoto as Command).ChangeCanExecute();
+                }
+            }
+        }
 
     }
 }

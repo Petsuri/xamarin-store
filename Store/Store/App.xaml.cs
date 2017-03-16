@@ -23,7 +23,7 @@ namespace Store.Ui
             Container = new UnityContainer();
             RegisterDependencies(Container);
 
-            MainPage = new NavigationPage(new HomePage());
+            MainPage = new HomePage();
 
 
         }
