@@ -6,6 +6,8 @@ using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.Model;
 using Store.Ui.View;
+using Store.Domain;
+using Store.ViewModel;
 
 namespace Store.Ui.Page
 {
@@ -15,12 +17,37 @@ namespace Store.Ui.Page
 
         private const int BooksPerRow = 4;
 
+        private IEnumerable<Book> m_books;
+        private IMessageQueue m_messaging;
+
         public UserBookListPage(IEnumerable<Book> books)
         {
             InitializeComponent();
 
-            ShowBooks(books.ToList());
+            m_books = books;
+            m_messaging = App.Container.Resolve<IMessageQueue>();
 
+            ShowBooks(books.ToList());
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            m_messaging.Subscribe<BookPreviewViewModel, BookPreview>(this, BookPreviewViewModel.ShowItemMessage, async (sender, book) =>
+            {
+                await Navigation.PushAsync(new PurchaseBookPage(book.Id, book.Category.SelectedCategory));
+            });
+
+            ShowBooks(m_books.ToList());
+
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            m_messaging.Unsubscribe<BookPreviewListViewModel, BookPreview>(this, BookPreviewViewModel.ShowItemMessage);
         }
 
         private void ShowBooks(IList<Book> books)
@@ -28,6 +55,7 @@ namespace Store.Ui.Page
             if (books.Any())
             {
                 Display(books);
+
             }else
             {
                 var noBooks = new Label() { Text = "Ei kirjoja" };
@@ -43,6 +71,7 @@ namespace Store.Ui.Page
 
         private void Display(IList<Book> books)
         {
+
             booksGrid.RowDefinitions.Clear();
             booksGrid.ColumnDefinitions.Clear();
 
@@ -52,13 +81,13 @@ namespace Store.Ui.Page
                 booksGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
             }
             booksGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-
+            
             for (var bookIndex = 0; bookIndex < books.Count(); bookIndex++)
             {
                 var currentBook = books[bookIndex];
 
                 var page = new BookPreviewView();
-                page.BindingContext = currentBook;
+                page.BindingContext = new BookPreviewViewModel(currentBook, m_messaging);
 
                 var row = (bookIndex / BooksPerRow);
                 var column = (bookIndex % BooksPerRow);
