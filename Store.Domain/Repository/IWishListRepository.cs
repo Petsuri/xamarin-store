@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 
 namespace Store.Repository
 {
-    public interface IPurchasedBooksRepository
+    public interface IWishListRepository
     {
 
-        Task AddAsync(Book book);
+        Task AddAsync(Book selectedBook);
+        Task RemoveAsync(Book selectedBook);
+
         Task<IEnumerable<Book>> LoadAllAsync();
-        Task<bool> IsPurchasedAsync(int bookId);
+
+        Task<bool> IsInWishListAsync(int bookId);
 
     }
 }

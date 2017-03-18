@@ -68,7 +68,8 @@
 
 
                 <Button Grid.Row="2" Grid.Column="0"
-                        Text="Lisää toivelistalle" />
+                        Text="Lisää toivelistalle"
+                        Command="{Binding AddWishList}"/>
 
                 <Button Grid.Row="2" Grid.Column="1"
                         Text="{Binding Path=Book.Price, 

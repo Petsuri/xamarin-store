@@ -2,6 +2,7 @@
 using Store.Model;
 using Store.Repository;
 using System;
+using System.Threading.Tasks;
 
 namespace Store.Service
 {
@@ -17,7 +18,7 @@ namespace Store.Service
             m_purchasedBooks = purchasedBooks;
         }
 
-        public void Purchase(Book selectedBook)
+        public async void PurchaseAsync(Book selectedBook)
         {
 
             if (!IsMoneyEnoughForPurchase(selectedBook))
@@ -26,13 +27,18 @@ namespace Store.Service
             }
 
             m_wallet.DeductAmount(selectedBook.Price);
-            m_purchasedBooks.AddAsync(selectedBook);
+            await m_purchasedBooks.AddAsync(selectedBook);
 
         }
         
         public bool IsMoneyEnoughForPurchase(Book selectedBook)
         {
             return selectedBook.Price <= m_wallet.CurrentAmount;
+        }
+
+        public async Task<bool> IsPurchasedAsync(Book selectedBook)
+        {
+            return await m_purchasedBooks.IsPurchasedAsync(selectedBook.Id);
         }
 
     }

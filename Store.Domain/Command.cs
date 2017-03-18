@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Store
@@ -19,7 +20,7 @@ namespace Store
             m_execute = execute;
             m_canExecute = canExecute;
         }
-
+        
         public void ChangeCanExecute()
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());

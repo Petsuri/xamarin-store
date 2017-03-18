@@ -10,31 +10,27 @@ using Store.Ui.View;
 namespace Store.Ui.Page
 {
 
-    public partial class PurchasedBooksPage : ContentPage
+    public partial class UserBookListPage : ContentPage
     {
 
         private const int BooksPerRow = 4;
 
-        public PurchasedBooksPage()
+        public UserBookListPage(IEnumerable<Book> books)
         {
             InitializeComponent();
 
-            ShowPurchasedBooks();
+            ShowBooks(books.ToList());
 
         }
 
-        private async void ShowPurchasedBooks()
+        private void ShowBooks(IList<Book> books)
         {
-            var repository = App.Container.Resolve<IPurchasedBooksRepository>();
-            var purchasedBooks = await repository.LoadAllAsync();
-            var allBooks = purchasedBooks.ToList();
-
-            if (allBooks.Any())
+            if (books.Any())
             {
-                Display(allBooks);
+                Display(books);
             }else
             {
-                var noBooks = new Label() { Text = "Ei ostettuja kirjoja" };
+                var noBooks = new Label() { Text = "Ei kirjoja" };
                 noBooks.HorizontalTextAlignment = TextAlignment.Center;
 
                 Grid.SetRow(noBooks, 0);

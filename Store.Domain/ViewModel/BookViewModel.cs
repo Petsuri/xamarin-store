@@ -3,6 +3,8 @@ using Store.Model;
 using Store.Repository;
 using Store.Service;
 using System.Windows.Input;
+using System;
+using System.Threading.Tasks;
 
 namespace Store.ViewModel
 {
@@ -13,68 +15,112 @@ namespace Store.ViewModel
         
         private bool m_isBusy = false;
         private int? m_currentBookId = null;
+        private bool m_canAddToWishList = false; 
 
         private WriteReviewViewModel m_newReview;
         private IBookRepository m_booksRepository;
         private IReviewRepository m_reviewRepository;
+        private IWishListRepository m_wishListRepository;
+        private PurchaseBookService m_purchaseService;
+       
         private Book m_book;
 
         public BookViewModel(IBookRepository bookRepository, 
                              IReviewRepository reviewRepository, 
                              IMessageQueue messaging, 
+                             IWishListRepository wishListRepository,
                              WriteReviewViewModel newReview,
                              PurchaseBookService purchaseService)
         {
             m_booksRepository = bookRepository;
             m_reviewRepository = reviewRepository;
+            m_wishListRepository = wishListRepository;
+            m_purchaseService = purchaseService;
+
             NewReview = newReview;
             Reviews = new ObservableRangeCollection<Review>();
-            ShowBookCover = new Command(
-                execute: () =>
-            {
-                messaging.Send(this, ShowBookCoverMessage, Book.Image);
-            }, canExecute: () =>
-            {
-                return Book != null && Book.Image != null;
-            }
-            );
 
-            SubmitNewReview = new Command(
-                execute: SubmitReview,
-                canExecute: () =>
-            {
-                return NewReview.IsValid() && m_currentBookId.HasValue;
-            });
-
-            BuyBook = new Command(
-                execute: () =>
-            {
-                purchaseService.Purchase(Book);
-                IncreaseBookPurchasedCountBy(1);
-
-                ChangeCanCommanExecute(BuyBook);
-
-            }, canExecute: () =>
-            {
-                return Book != null && purchaseService.IsMoneyEnoughForPurchase(Book);
-            });
-
+            BuyBook = CreateBuyBookCommand(purchaseService, wishListRepository);
+            AddWishList = CreateAddWishListCommand(purchaseService, wishListRepository);
+            ShowBookCover = CreateShowBookCoverCommand(messaging);
+            SubmitNewReview = CreateSubitNewReviewCommand(reviewRepository);
+            
             newReview.PropertyChanged += (sender, args) =>
             {
                 ChangeCanCommanExecute(SubmitNewReview);
             };
         }
 
-        private async void SubmitReview()
+        private ICommand CreateBuyBookCommand(PurchaseBookService purchaseService, IWishListRepository wishListRepository)
         {
-            var review = NewReview.GetReview();
-            await m_reviewRepository.SaveReviewAsync(m_currentBookId.Value, review);
+            return new Command(
+               execute: async () =>
+               {
+                   IsBusy = true;
 
-            Reviews.Add(review);
+                   purchaseService.PurchaseAsync(Book);
+                   IncreaseBookPurchasedCountBy(1);
+                   await wishListRepository.RemoveAsync(Book);
 
-            NewReview.Clear();
+                   ChangeCanCommanExecute(BuyBook);
+                   UpdateCanBookBeAddedToWishList(Book);
+
+                   IsBusy = false;  
+
+               }, canExecute: () =>
+               {
+                   return Book != null && purchaseService.IsMoneyEnoughForPurchase(Book);
+               });
         }
 
+        private ICommand CreateAddWishListCommand(PurchaseBookService purchaseService, IWishListRepository wishListRepository)
+        {
+            return new Command(
+                execute: async () =>
+                {
+                    IsBusy = true;
+                    await wishListRepository.AddAsync(Book);
+                    UpdateCanBookBeAddedToWishList(Book);
+                    IsBusy = false;
+
+                }, canExecute: () =>
+                {
+                    return m_canAddToWishList;
+                });
+        }
+
+        private ICommand CreateShowBookCoverCommand(IMessageQueue messaging)
+        {
+            return new Command(
+                execute: () =>
+                {
+                    messaging.Send(this, ShowBookCoverMessage, Book.Image);
+                }, canExecute: () =>
+                {
+                    return Book != null && Book.Image != null;
+                }
+            );
+
+        }
+
+        private ICommand CreateSubitNewReviewCommand(IReviewRepository reviews)
+        {
+            return new Command(
+                execute: async () =>
+                {
+                    var review = NewReview.GetReview();
+                    await reviews.SaveReviewAsync(m_currentBookId.Value, review);
+
+                    Reviews.Add(review);
+
+                    NewReview.Clear();
+                },
+                canExecute: () =>
+                {
+                    return NewReview.IsValid() && m_currentBookId.HasValue;
+                });
+        }
+                
         private void ChangeCanCommanExecute(ICommand command)
         {
             var c = (command as Command);
@@ -82,19 +128,15 @@ namespace Store.ViewModel
             {
                 c.ChangeCanExecute();
             }
-
-
         }
         
         private void IncreaseBookPurchasedCountBy(int amount)
         {
-
             var currentBook = Book;
             currentBook.PurchasedCount += amount;
 
             Book = null;
             Book = currentBook;
-
         }
 
         public async void Load(int bookId)
@@ -108,6 +150,9 @@ namespace Store.ViewModel
                 IsBusy = true;
                 
                 Book = await m_booksRepository.LoadAsync(bookId);
+
+                UpdateCanBookBeAddedToWishList(Book);
+
                 ChangeCanCommanExecute(BuyBook);
                 ChangeCanCommanExecute(ShowBookCover);
 
@@ -117,6 +162,25 @@ namespace Store.ViewModel
 
                 IsBusy = false;
             }
+        }
+
+        private async void UpdateCanBookBeAddedToWishList(Book selectedBook)
+        {
+
+            if (m_currentBookId.HasValue)
+            {
+                var isBookInWishList = await m_wishListRepository.IsInWishListAsync(selectedBook.Id);
+                var isBookPurchased = await m_purchaseService.IsPurchasedAsync(selectedBook);
+
+                m_canAddToWishList = !isBookInWishList && !isBookPurchased;
+            }
+            else
+            {
+                m_canAddToWishList = false;
+            }
+
+            ChangeCanCommanExecute(AddWishList);
+            
         }
 
         public Book Book
@@ -130,8 +194,7 @@ namespace Store.ViewModel
             get { return m_isBusy; }
             set { SetProperty(ref m_isBusy, value); }
         }
-
-       
+               
         public WriteReviewViewModel NewReview
         {
             get { return m_newReview; }
@@ -139,9 +202,11 @@ namespace Store.ViewModel
         }
 
         public ObservableRangeCollection<Review> Reviews { get; private set; }
+
+        public ICommand BuyBook { get; private set; }
+        public ICommand AddWishList { get; private set; }
         public ICommand ShowBookCover { get; private set; }
         public ICommand SubmitNewReview { get; private set; }
-        public ICommand BuyBook { get; private set; }
 
     }
 }

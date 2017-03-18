@@ -3,6 +3,9 @@
 using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.Domain;
+using Store.Repository;
+using System.Linq;
+using System;
 
 namespace Store.Ui.Page
 {
@@ -22,10 +25,27 @@ namespace Store.Ui.Page
             
         }
 
-        private async void ImageCell_Tapped(object sender, System.EventArgs e)
+        private async void ShowOwnBooks(object sender, EventArgs e)
         {
             IsPresented = false;
-            await m_navigation.PushAsync(new PurchasedBooksPage());
+
+
+            var repository = App.Container.Resolve<IPurchasedBooksRepository>();
+            var purchasedBooks = await repository.LoadAllAsync();
+            
+            await m_navigation.PushAsync(new UserBookListPage(purchasedBooks) { Title = "Omat kirjat" });
+
+        }
+
+        private async void ShowWishListBooks(object sender, EventArgs e)
+        {
+            IsPresented = false;
+
+            var repository = App.Container.Resolve<IWishListRepository>();
+            var wishListBooks = await repository.LoadAllAsync();
+
+            await m_navigation.PushAsync(new UserBookListPage(wishListBooks) { Title = "Toivelista" });
+
         }
 
         protected override bool OnBackButtonPressed()

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Store.Model;
+using System;
+using System.Linq;
 
 namespace Store.DataMock
 {
@@ -13,6 +15,12 @@ namespace Store.DataMock
         {
             await Task.Delay(250);
             m_purchasedBooks.Add(book);
+        }
+
+        public async Task<bool> IsPurchasedAsync(int bookId)
+        {
+            await Task.Delay(100);
+            return m_purchasedBooks.Any(book => book.Id == bookId);
         }
 
         public async Task<IEnumerable<Book>> LoadAllAsync()

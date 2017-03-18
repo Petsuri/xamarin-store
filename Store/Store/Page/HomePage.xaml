@@ -12,8 +12,8 @@
                 <TableView Intent="Menu">
                     <TableRoot>
                         <TableSection Title="Oma kirjasto">
-                            <ImageCell Text="Ostetut" Tapped="ImageCell_Tapped"/>
-                            <ImageCell Text="Toivelista" />
+                            <ImageCell Text="Ostetut" Tapped="ShowOwnBooks"/>
+                            <ImageCell Text="Toivelista" Tapped="ShowWishListBooks"/>
                         </TableSection>
 
                     </TableRoot>
