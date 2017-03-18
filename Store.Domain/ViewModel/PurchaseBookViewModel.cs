@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Store.ViewModel
 {
-    public class BookViewModel : ViewModelBase
+    public class PurchaseBookViewModel : ViewModelBase
     {
 
         public const string ShowBookCoverMessage = "showShowBookCover";
@@ -25,7 +25,7 @@ namespace Store.ViewModel
        
         private Book m_book;
 
-        public BookViewModel(IBookRepository bookRepository, 
+        public PurchaseBookViewModel(IBookRepository bookRepository, 
                              IReviewRepository reviewRepository, 
                              IMessageQueue messaging, 
                              IWishListRepository wishListRepository,
@@ -40,7 +40,7 @@ namespace Store.ViewModel
             NewReview = newReview;
             Reviews = new ObservableRangeCollection<Review>();
 
-            BuyBook = CreateBuyBookCommand(purchaseService, wishListRepository);
+            PurchaseBook = CreateBuyBookCommand(purchaseService, wishListRepository);
             AddWishList = CreateAddWishListCommand(purchaseService, wishListRepository);
             ShowBookCover = CreateShowBookCoverCommand(messaging);
             SubmitNewReview = CreateSubitNewReviewCommand(reviewRepository);
@@ -62,7 +62,7 @@ namespace Store.ViewModel
                    IncreaseBookPurchasedCountBy(1);
                    await wishListRepository.RemoveAsync(Book);
 
-                   ChangeCanCommanExecute(BuyBook);
+                   ChangeCanCommanExecute(PurchaseBook);
                    UpdateCanBookBeAddedToWishList(Book);
 
                    IsBusy = false;  
@@ -79,8 +79,11 @@ namespace Store.ViewModel
                 execute: async () =>
                 {
                     IsBusy = true;
+
+                    m_canAddToWishList = false;
+                    ChangeCanCommanExecute(AddWishList);
                     await wishListRepository.AddAsync(Book);
-                    UpdateCanBookBeAddedToWishList(Book);
+
                     IsBusy = false;
 
                 }, canExecute: () =>
@@ -153,7 +156,7 @@ namespace Store.ViewModel
 
                 UpdateCanBookBeAddedToWishList(Book);
 
-                ChangeCanCommanExecute(BuyBook);
+                ChangeCanCommanExecute(PurchaseBook);
                 ChangeCanCommanExecute(ShowBookCover);
 
                 var bookReviews = await m_reviewRepository.LoadReviewsAsync(bookId);
@@ -203,7 +206,7 @@ namespace Store.ViewModel
 
         public ObservableRangeCollection<Review> Reviews { get; private set; }
 
-        public ICommand BuyBook { get; private set; }
+        public ICommand PurchaseBook { get; private set; }
         public ICommand AddWishList { get; private set; }
         public ICommand ShowBookCover { get; private set; }
         public ICommand SubmitNewReview { get; private set; }

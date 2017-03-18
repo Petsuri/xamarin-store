@@ -4,9 +4,9 @@ using Xamarin.Forms;
 namespace Store.Ui.View
 {
 
-    public partial class StoreItemPreviewView : ContentView
+    public partial class BookPreviewView : ContentView
     {
-        public StoreItemPreviewView()
+        public BookPreviewView()
         {
             InitializeComponent();
         }

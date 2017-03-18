@@ -53,7 +53,7 @@
     <Compile Include="Repository\IWishListRepository.cs" />
     <Compile Include="Service\PurchaseBookService.cs" />
     <Compile Include="ViewModel\BookPreviewListViewModel.cs" />
-    <Compile Include="ViewModel\BookViewModel.cs" />
+    <Compile Include="ViewModel\PurchaseBookViewModel.cs" />
     <Compile Include="ViewModel\BookPreviewViewModel.cs" />
     <Compile Include="ViewModel\HomeDetailViewModel.cs" />
     <Compile Include="ViewModel\WriteReviewViewModel.cs" />

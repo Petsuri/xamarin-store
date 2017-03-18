@@ -57,7 +57,7 @@ namespace Store.Ui.Page
             {
                 var currentBook = books[bookIndex];
 
-                var page = new StoreItemPreviewView();
+                var page = new BookPreviewView();
                 page.BindingContext = currentBook;
 
                 var row = (bookIndex / BooksPerRow);

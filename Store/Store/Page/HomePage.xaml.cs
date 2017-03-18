@@ -4,7 +4,6 @@ using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.Domain;
 using Store.Repository;
-using System.Linq;
 using System;
 
 namespace Store.Ui.Page
@@ -28,8 +27,7 @@ namespace Store.Ui.Page
         private async void ShowOwnBooks(object sender, EventArgs e)
         {
             IsPresented = false;
-
-
+            
             var repository = App.Container.Resolve<IPurchasedBooksRepository>();
             var purchasedBooks = await repository.LoadAllAsync();
             
@@ -46,6 +44,12 @@ namespace Store.Ui.Page
 
             await m_navigation.PushAsync(new UserBookListPage(wishListBooks) { Title = "Toivelista" });
 
+        }
+
+        private void CloseProgram(object sender, EventArgs e)
+        {
+            var application = App.Container.Resolve<IApplication>();
+            application.Close();
         }
 
         protected override bool OnBackButtonPressed()

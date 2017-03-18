@@ -40,7 +40,7 @@ namespace Store.Ui
             container.RegisterType<IBookRepository, DataMock.MangaBookRepository>(BookCategory.Category.Manga.ToString());
             container.RegisterType<IBookRepository, DataMock.RecommendationBookRepository>(BookCategory.Category.Recommendation.ToString());
 
-            container.RegisterType<BookViewModel>(BookCategory.Category.Recommendation.ToString(),
+            container.RegisterType<PurchaseBookViewModel>(BookCategory.Category.Recommendation.ToString(),
                 new InjectionConstructor(
                     typeof(DataMock.RecommendationBookRepository), 
                     typeof(DataMock.BookReviewRepository), 
@@ -52,7 +52,7 @@ namespace Store.Ui
             );
 
 
-            container.RegisterType<BookViewModel>(BookCategory.Category.Manga.ToString(),
+            container.RegisterType<PurchaseBookViewModel>(BookCategory.Category.Manga.ToString(),
                 new InjectionConstructor(
                     typeof(DataMock.MangaBookRepository),
                     typeof(DataMock.BookReviewRepository),

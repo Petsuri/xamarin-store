@@ -2,7 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:local="clr-namespace:Store.Ui.Converter;assembly=Store.Ui"
-             x:Class="Store.Ui.View.StoreItemPreviewView"> 
+             x:Class="Store.Ui.View.BookPreviewView"> 
     <ContentView.Content>
 
         <Frame WidthRequest="100" 

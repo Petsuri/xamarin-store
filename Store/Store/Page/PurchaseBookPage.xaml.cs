@@ -7,19 +7,19 @@ using Store.Model;
 namespace Store.Ui.Page
 {
 
-    public partial class BookPage : ContentPage
+    public partial class PurchaseBookPage : ContentPage
     {
 
-        private BookViewModel m_model;
+        private PurchaseBookViewModel m_model;
         public int BookId { get; private set; }
 
         
-        public BookPage(int bookId, BookCategory.Category category)
+        public PurchaseBookPage(int bookId, BookCategory.Category category)
         {
             InitializeComponent();
             this.BookId = bookId;
             
-            m_model = App.Container.Resolve<BookViewModel>(category.ToString());
+            m_model = App.Container.Resolve<PurchaseBookViewModel>(category.ToString());
             BindingContext = m_model;
 
         }

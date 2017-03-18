@@ -6,7 +6,8 @@
              xmlns:control="clr-namespace:Store.Ui.Control"
              xmlns:viewmodel="clr-namespace:Store.ViewModel;assembly=Store"
              IsEnabled="False"
-             Title="Petrin kauppa">
+             Title="Petrin kauppa"
+             Padding="5, 10">
 
     <AbsoluteLayout>
 
@@ -25,7 +26,7 @@
                              BindingContext="{Binding Path=Recommendation}">
 
                     <control:ElementList Orientation="Horizontal" IsEnabled="False"
-                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewViewModel"
+                                         x:TypeArguments="views:BookPreviewView, viewmodel:BookPreviewViewModel"
                                          ElementsSource="{Binding Path=Books, Mode=OneWay}" />
 
                     <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 
@@ -43,7 +44,7 @@
                              BindingContext="{Binding Manga}">
 
                     <control:ElementList Orientation="Horizontal"
-                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewViewModel"
+                                         x:TypeArguments="views:BookPreviewView, viewmodel:BookPreviewViewModel"
                                          ElementsSource="{Binding Path=Books, Mode=OneWay}" />
 
                     <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 

@@ -24,7 +24,7 @@ namespace Store.Ui.Page
             SetChildrenPages(selectedBookId, allBookIds, selectedBookCategory);
 
             var messaging = App.Container.Resolve<IMessageQueue>();
-            messaging.Subscribe<BookViewModel, byte[]>(this, BookViewModel.ShowBookCoverMessage, async (sender, imageBytes) =>
+            messaging.Subscribe<PurchaseBookViewModel, byte[]>(this, PurchaseBookViewModel.ShowBookCoverMessage, async (sender, imageBytes) =>
             {
                 await Navigation.PushAsync(new BookCoverPage(imageBytes));
             });
@@ -33,10 +33,10 @@ namespace Store.Ui.Page
         private void SetChildrenPages(int selectedBookId, IEnumerable<int> allBookIds, BookCategory.Category selectedBookCategory)
         {
 
-            IList<BookPage> allBookPages = new List<BookPage>();
+            IList<PurchaseBookPage> allBookPages = new List<PurchaseBookPage>();
             foreach (var id in allBookIds)
             {
-                allBookPages.Add(new BookPage(id, selectedBookCategory));
+                allBookPages.Add(new PurchaseBookPage(id, selectedBookCategory));
             }
 
             foreach (var page in allBookPages)

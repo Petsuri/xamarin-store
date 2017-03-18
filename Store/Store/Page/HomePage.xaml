@@ -5,19 +5,30 @@
                   Title="Petrin kauppa">
 
     <MasterDetailPage.Master>
-        <ContentPage Title="Asetukset">
+        <ContentPage Title="Asetukset"
+                     Padding="0, 20, 0, 0">
             <StackLayout>
 
-
-                <TableView Intent="Menu">
+                <TableView Intent="Menu" 
+                           VerticalOptions="Start">
                     <TableRoot>
                         <TableSection Title="Oma kirjasto">
-                            <ImageCell Text="Ostetut" Tapped="ShowOwnBooks"/>
-                            <ImageCell Text="Toivelista" Tapped="ShowWishListBooks"/>
+                            <TextCell Text="Ostetut" Tapped="ShowOwnBooks"/>
+                            <TextCell Text="Toivelista" Tapped="ShowWishListBooks"/>
                         </TableSection>
 
                     </TableRoot>
                 </TableView>
+
+                <TableView Intent="Menu"
+                           VerticalOptions="End">
+                    <TableRoot>
+                        <TableSection>
+                            <TextCell Text="Sulje" Tapped="CloseProgram" />
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+                
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>
