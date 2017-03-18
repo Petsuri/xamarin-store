@@ -4,7 +4,7 @@ using Microsoft.Practices.Unity;
 using Store.ViewModel;
 using Store.Model;
 
-namespace Store.Ui.View
+namespace Store.Ui.Page
 {
 
     public partial class BookPage : ContentPage

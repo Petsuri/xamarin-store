@@ -4,7 +4,7 @@ using Store.Model;
 using Store.Repository;
 using Store.Service;
 using Store.Ui.Common;
-using Store.Ui.View;
+using Store.Ui.Page;
 using Store.ViewModel;
 using Xamarin.Forms;
 

@@ -2,7 +2,7 @@
 
 using Xamarin.Forms;
 
-namespace Store.Ui.View
+namespace Store.Ui.Page
 {
     public partial class BookCoverPage : ContentPage
     {

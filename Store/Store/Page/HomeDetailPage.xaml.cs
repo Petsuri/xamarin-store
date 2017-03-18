@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using Store.Domain;
 using Store.Repository;
 
-namespace Store.Ui.View
+namespace Store.Ui.Page
 {
 
     public partial class HomeDetailPage : ContentPage

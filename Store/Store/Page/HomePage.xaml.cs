@@ -4,20 +4,28 @@ using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.Domain;
 
-namespace Store.Ui.View
+namespace Store.Ui.Page
 {
     public partial class HomePage : MasterDetailPage
     {
+
+        private INavigation m_navigation;
         
         public HomePage()
         {
             InitializeComponent();
 
-            var navigation = new NavigationPage(new HomeDetailPage());
+            var navigationPage = new NavigationPage(new HomeDetailPage());
 
-            Detail = navigation;
-            Master = new HomeMasterPage(navigation.Navigation);
+            Detail = navigationPage;
+            m_navigation = navigationPage.Navigation;
             
+        }
+
+        private async void ImageCell_Tapped(object sender, System.EventArgs e)
+        {
+            IsPresented = false;
+            await m_navigation.PushAsync(new PurchasedBooksPage());
         }
 
         protected override bool OnBackButtonPressed()

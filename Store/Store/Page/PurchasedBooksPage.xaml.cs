@@ -5,8 +5,9 @@ using System.Linq;
 using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.Model;
+using Store.Ui.View;
 
-namespace Store.Ui.View
+namespace Store.Ui.Page
 {
 
     public partial class PurchasedBooksPage : ContentPage

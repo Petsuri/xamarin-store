@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.ViewModel;
 
-namespace Store.Ui.View
+namespace Store.Ui.Page
 {
 
     public partial class BookCarouselPage : CarouselPage

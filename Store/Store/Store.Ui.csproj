@@ -42,28 +42,25 @@
     <Compile Include="Control\ElementList.cs" />
     <Compile Include="Converter\BytesToBooleanConverter.cs" />
     <Compile Include="Converter\BytesToImageConverter.cs" />
-    <Compile Include="View\BookCoverPage.xaml.cs">
+    <Compile Include="Page\BookCoverPage.xaml.cs">
       <DependentUpon>BookCoverPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BookPage.xaml.cs">
+    <Compile Include="Page\BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PurchasedBooksPage.xaml.cs">
+    <Compile Include="Page\PurchasedBooksPage.xaml.cs">
       <DependentUpon>PurchasedBooksPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ReviewView.xaml.cs">
       <DependentUpon>ReviewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HomeMasterPage.xaml.cs">
-      <DependentUpon>HomeMasterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HomeDetailPage.xaml.cs">
+    <Compile Include="Page\HomeDetailPage.xaml.cs">
       <DependentUpon>HomeDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HomePage.xaml.cs">
+    <Compile Include="Page\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BookCarouselPage.xaml.cs">
+    <Compile Include="Page\BookCarouselPage.xaml.cs">
       <DependentUpon>BookCarouselPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StoreItemPreviewView.xaml.cs">
@@ -119,7 +116,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\HomePage.xaml">
+    <EmbeddedResource Include="Page\HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -135,30 +132,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\HomeDetailPage.xaml">
+    <EmbeddedResource Include="Page\HomeDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\HomeMasterPage.xaml">
+    <EmbeddedResource Include="Page\BookCarouselPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Page\BookPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\BookCarouselPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="View\BookPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="View\BookCoverPage.xaml">
+    <EmbeddedResource Include="Page\BookCoverPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -169,7 +160,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\PurchasedBooksPage.xaml">
+    <EmbeddedResource Include="Page\PurchasedBooksPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

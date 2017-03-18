@@ -5,8 +5,8 @@
              xmlns:views="clr-namespace:Store.Ui.View"
              xmlns:control="clr-namespace:Store.Ui.Control"
              xmlns:model="clr-namespace:Store.Model;assembly=Store"
-             x:Class="Store.Ui.View.BookPage"
-             Padding="5, 20, 5, 0">
+             x:Class="Store.Ui.Page.BookPage"
+             Padding="5, 0, 5, 0">
        
     <ScrollView>
 
