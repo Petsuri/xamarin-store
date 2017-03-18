@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Store.Model
 {
-    public class BookPreviewItem
+    public class BookPreview
     {
         public int Id { get; private set; }
         public byte[] Image { get; set; }
@@ -14,7 +9,7 @@ namespace Store.Model
         public decimal UserScore { get; set; }
         public BookCategory Category { get; set; }
 
-        public BookPreviewItem(int id)
+        public BookPreview(int id)
         {
             this.Id = id;
         }

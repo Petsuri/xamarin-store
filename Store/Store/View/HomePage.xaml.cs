@@ -27,7 +27,7 @@ namespace Store.Ui.View
             if (isClosingHomePage)
             {
                 var application = App.Container.Resolve<IApplication>();
-                application.close();
+                application.Close();
                 return true;
 
             }else

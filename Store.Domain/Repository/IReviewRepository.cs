@@ -1,8 +1,5 @@
 ﻿using Store.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Store.Repository
@@ -10,8 +7,8 @@ namespace Store.Repository
     public interface IReviewRepository
     {
 
-        Task<IEnumerable<Review>> loadReviewsAsync(int itemId);
-        Task saveReviewAsync(int itemId, Review review);
+        Task<IEnumerable<Review>> LoadReviewsAsync(int itemId);
+        Task SaveReviewAsync(int itemId, Review review);
 
     }
 }

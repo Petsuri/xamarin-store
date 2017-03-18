@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Store.Domain
 {
     public interface ICamera
     {
-        bool isTakePhotoSupported();
-        Task<byte[]> takePhotoAsync();
+        bool IsTakePhotoSupported();
+        Task<byte[]> TakePhotoAsync();
     }
 }

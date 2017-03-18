@@ -1,11 +1,4 @@
 ﻿using Store.Domain;
-using Store.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.ViewModel
 {
@@ -23,21 +16,21 @@ namespace Store.ViewModel
             m_isBusy = false;
         }
 
-        public void addRecommendationList(BookPreviewItemListViewModel r)
+        public void AddRecommendationList(BookPreviewListViewModel r)
         {
             Recommendation = r;
         }
 
-        public void addMangaList(BookPreviewItemListViewModel m)
+        public void AddMangaList(BookPreviewListViewModel m)
         {
             Manga = m;
         }
         
-        public void loadItems()
+        public void LoadItems()
         {
             IsBusy = true;
-            Manga.loadNextBooks();
-            Recommendation.loadNextBooks();
+            Manga.LoadNextBooks();
+            Recommendation.LoadNextBooks();
             IsBusy = false;
         }
 
@@ -47,20 +40,20 @@ namespace Store.ViewModel
             set { SetProperty(ref m_isBusy, value); }
         }
 
-        public void disableSelections()
+        public void DisableSelections()
         {
-            Manga.disableSelection();
-            Recommendation.disableSelection();
+            Manga.DisableSelection();
+            Recommendation.DisableSelection();
         }
 
-        public void enableSelections()
+        public void EnableSelections()
         {
-            Manga.enableSelection();
-            Recommendation.enableSelection();
+            Manga.EnableSelection();
+            Recommendation.EnableSelection();
         }
         
-        public BookPreviewItemListViewModel Manga { get; private set; }
-        public BookPreviewItemListViewModel Recommendation { get; private set; }
+        public BookPreviewListViewModel Manga { get; private set; }
+        public BookPreviewListViewModel Recommendation { get; private set; }
 
     }
 }

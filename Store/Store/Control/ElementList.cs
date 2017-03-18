@@ -1,10 +1,4 @@
-﻿using Store.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Xamarin.Forms;
 
@@ -24,7 +18,7 @@ namespace Store.Ui.Control
                 var elementList = (sender as ElementList<TView, TItem>);
                 if (elementList != null)
                 {
-                    elementList.ElementsSource.CollectionChanged += elementList.handleElementListChange;
+                    elementList.ElementsSource.CollectionChanged += elementList.HandleElementListChange;
                 }
 
             });
@@ -35,7 +29,7 @@ namespace Store.Ui.Control
             set { SetValue(ElementsSourceProperty, value); }
         }
         
-        private void handleElementListChange(object sender, NotifyCollectionChangedEventArgs e)
+        private void HandleElementListChange(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {

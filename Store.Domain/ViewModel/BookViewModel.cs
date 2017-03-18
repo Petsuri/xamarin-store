@@ -2,7 +2,6 @@
 using Store.Model;
 using Store.Repository;
 using Store.Service;
-using System;
 using System.Windows.Input;
 
 namespace Store.ViewModel
@@ -41,23 +40,23 @@ namespace Store.ViewModel
             );
 
             SubmitNewReview = new Command(
-                execute: submitReview,
+                execute: SubmitReview,
                 canExecute: () =>
             {
-                return NewReview.isValid() && m_currentBookId.HasValue;
+                return NewReview.IsValid() && m_currentBookId.HasValue;
             });
 
             BuyBook = new Command(
                 execute: () =>
             {
-                purchaseService.purchase(Book);
-                increaseBookPurchasedCountBy(1);
+                purchaseService.Purchase(Book);
+                IncreaseBookPurchasedCountBy(1);
 
                 ChangeCanCommanExecute(BuyBook);
 
             }, canExecute: () =>
             {
-                return Book != null && purchaseService.isMoneyEnoughForPurchase(Book);
+                return Book != null && purchaseService.IsMoneyEnoughForPurchase(Book);
             });
 
             newReview.PropertyChanged += (sender, args) =>
@@ -66,14 +65,14 @@ namespace Store.ViewModel
             };
         }
 
-        private async void submitReview()
+        private async void SubmitReview()
         {
-            var review = NewReview.getReview();
-            await m_reviewRepository.saveReviewAsync(m_currentBookId.Value, review);
+            var review = NewReview.GetReview();
+            await m_reviewRepository.SaveReviewAsync(m_currentBookId.Value, review);
 
             Reviews.Add(review);
 
-            NewReview.clear();
+            NewReview.Clear();
         }
 
         private void ChangeCanCommanExecute(ICommand command)
@@ -87,7 +86,7 @@ namespace Store.ViewModel
 
         }
         
-        private void increaseBookPurchasedCountBy(int amount)
+        private void IncreaseBookPurchasedCountBy(int amount)
         {
 
             var currentBook = Book;
@@ -98,7 +97,7 @@ namespace Store.ViewModel
 
         }
 
-        public async void load(int bookId)
+        public async void Load(int bookId)
         {
             bool loadSelectedBook = (!m_currentBookId.HasValue || (m_currentBookId.Value != bookId));
             if (loadSelectedBook)
@@ -108,11 +107,11 @@ namespace Store.ViewModel
 
                 IsBusy = true;
                 
-                Book = await m_booksRepository.loadAsync(bookId);
+                Book = await m_booksRepository.LoadAsync(bookId);
                 ChangeCanCommanExecute(BuyBook);
                 ChangeCanCommanExecute(ShowBookCover);
 
-                var bookReviews = await m_reviewRepository.loadReviewsAsync(bookId);
+                var bookReviews = await m_reviewRepository.LoadReviewsAsync(bookId);
                 Reviews.Clear();
                 Reviews.AddRange(bookReviews);
 

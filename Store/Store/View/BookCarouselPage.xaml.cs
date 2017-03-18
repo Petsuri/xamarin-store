@@ -1,19 +1,15 @@
 ﻿using Store.Domain;
 using Store.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using Microsoft.Practices.Unity;
 using Store.ViewModel;
 
 namespace Store.Ui.View
 {
-    
+
     public partial class BookCarouselPage : CarouselPage
     {
 
@@ -25,7 +21,7 @@ namespace Store.Ui.View
 
             Title = (selectedBookCategory == BookCategory.Category.Manga) ? "Mangaa suoraan Jaappanista" : "Suosittelemme sinulle";
                 
-            setChildrenPages(selectedBookId, allBookIds, selectedBookCategory);
+            SetChildrenPages(selectedBookId, allBookIds, selectedBookCategory);
 
             var messaging = App.Container.Resolve<IMessageQueue>();
             messaging.Subscribe<BookViewModel, byte[]>(this, BookViewModel.ShowBookCoverMessage, async (sender, imageBytes) =>
@@ -34,7 +30,7 @@ namespace Store.Ui.View
             });
         }
 
-        private void setChildrenPages(int selectedBookId, IEnumerable<int> allBookIds, BookCategory.Category selectedBookCategory)
+        private void SetChildrenPages(int selectedBookId, IEnumerable<int> allBookIds, BookCategory.Category selectedBookCategory)
         {
 
             IList<BookPage> allBookPages = new List<BookPage>();

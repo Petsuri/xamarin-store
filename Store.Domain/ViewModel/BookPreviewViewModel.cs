@@ -1,15 +1,10 @@
 ﻿using Store.Domain;
 using Store.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Store.ViewModel
 {
-    public class BookPreviewItemViewModel : ViewModelBase
+    public class BookPreviewViewModel : ViewModelBase
     {
 
         public const string ShowItemMessage = "ShowItem";
@@ -20,7 +15,7 @@ namespace Store.ViewModel
         private decimal m_userScore;
         private bool m_isSelectable;
 
-        public BookPreviewItemViewModel(BookPreviewItem item, IMessageQueue messaging)
+        public BookPreviewViewModel(BookPreview item, IMessageQueue messaging)
         {
             m_image = item.Image;
             m_name = item.Name;

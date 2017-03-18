@@ -19,24 +19,24 @@ namespace Store.Ui.View
             InitializeComponent();
             
             m_viewModel = App.Container.Resolve<HomeDetailViewModel>();
-            m_viewModel.addMangaList(App.Container.Resolve<BookPreviewItemListViewModel>(BookCategory.Category.Manga.ToString()));
-            m_viewModel.addRecommendationList(App.Container.Resolve<BookPreviewItemListViewModel>(BookCategory.Category.Recommendation.ToString()));
-            m_viewModel.loadItems();
+            m_viewModel.AddMangaList(App.Container.Resolve<BookPreviewListViewModel>(BookCategory.Category.Manga.ToString()));
+            m_viewModel.AddRecommendationList(App.Container.Resolve<BookPreviewListViewModel>(BookCategory.Category.Recommendation.ToString()));
+            m_viewModel.LoadItems();
             
             BindingContext = m_viewModel;
 
             IMessageQueue messaging = App.Container.Resolve<IMessageQueue>();
-            messaging.Subscribe<BookPreviewItemViewModel, BookPreviewItem>(this, BookPreviewItemViewModel.ShowItemMessage, async (sender, selectedItem) =>
+            messaging.Subscribe<BookPreviewViewModel, BookPreview>(this, BookPreviewViewModel.ShowItemMessage, async (sender, selectedItem) =>
             {
                 m_viewModel.IsBusy = true;
-                m_viewModel.disableSelections();
+                m_viewModel.DisableSelections();
 
                 var books = App.Container.Resolve<IBookRepository>(selectedItem.Category.SelectedCategory.ToString());
-                var allPreviewIds = await books.loadAllPreviewItemIdsAsync();
+                var allPreviewIds = await books.LoadAllPreviewBookIdsAsync();
                 await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds, selectedItem.Category.SelectedCategory));
 
                 m_viewModel.IsBusy = false;
-                m_viewModel.enableSelections();
+                m_viewModel.EnableSelections();
             });
             
         }
@@ -44,22 +44,22 @@ namespace Store.Ui.View
 
         private void BookRecommendationsScrolled(object sender, ScrolledEventArgs e)
         {            
-            if (isScrollectToRightEnd((ScrollView)sender))
+            if (IsScrollectToRightEnd((ScrollView)sender))
             {
-                m_viewModel.Recommendation.loadNextBooks();
+                m_viewModel.Recommendation.LoadNextBooks();
             }
         }
 
         private void BookMangasScrolled(object sender, ScrolledEventArgs e)
         {
-            if (isScrollectToRightEnd((ScrollView)sender))
+            if (IsScrollectToRightEnd((ScrollView)sender))
             {
-                m_viewModel.Manga.loadNextBooks();
+                m_viewModel.Manga.LoadNextBooks();
             }
         }
 
 
-        private bool isScrollectToRightEnd(ScrollView sv)
+        private bool IsScrollectToRightEnd(ScrollView sv)
         {
             return (sv.ScrollX >= (sv.ContentSize.Width - sv.Width));
         }

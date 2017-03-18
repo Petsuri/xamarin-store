@@ -1,10 +1,6 @@
 ﻿using Store.Domain;
 using Store.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Store.ViewModel
@@ -19,23 +15,23 @@ namespace Store.ViewModel
 
         public WriteReviewViewModel(ICamera camera)
         {
-            clear();
+            Clear();
 
             TakePhoto = new Command(
                 execute: async () =>
             {
                 IsTakingPhoto = true;
-                Photo = await camera.takePhotoAsync();
+                Photo = await camera.TakePhotoAsync();
                 IsTakingPhoto = false;
             }, canExecute: () =>
             {
-                return camera.isTakePhotoSupported() && !IsTakingPhoto;
+                return camera.IsTakePhotoSupported() && !IsTakingPhoto;
             });
             
         }
 
 
-        public Review getReview()
+        public Review GetReview()
         {
             return new Review(null) {
                 UserName = "Tuleva mobiilikehittäjä",
@@ -46,12 +42,12 @@ namespace Store.ViewModel
             };
         }
 
-        public bool isValid()
+        public bool IsValid()
         {
             return !string.IsNullOrEmpty(Text);
         }
 
-        public void clear()
+        public void Clear()
         {
             Score = 1;
             Text = "";

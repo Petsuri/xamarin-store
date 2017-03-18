@@ -1,12 +1,8 @@
 ﻿using Store.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using Microsoft.Practices.Unity;
 using Store.Model;
 
@@ -22,19 +18,19 @@ namespace Store.Ui.View
         {
             InitializeComponent();
 
-            showPurchasedBooks();
+            ShowPurchasedBooks();
 
         }
 
-        private async void showPurchasedBooks()
+        private async void ShowPurchasedBooks()
         {
             var repository = App.Container.Resolve<IPurchasedBooksRepository>();
-            var purchasedBooks = await repository.loadAllAsync();
+            var purchasedBooks = await repository.LoadAllAsync();
             var allBooks = purchasedBooks.ToList();
 
             if (allBooks.Any())
             {
-                display(allBooks);
+                Display(allBooks);
             }else
             {
                 var noBooks = new Label() { Text = "Ei ostettuja kirjoja" };
@@ -48,7 +44,7 @@ namespace Store.Ui.View
             
         }
 
-        private void display(IList<Book> books)
+        private void Display(IList<Book> books)
         {
             booksGrid.RowDefinitions.Clear();
             booksGrid.ColumnDefinitions.Clear();

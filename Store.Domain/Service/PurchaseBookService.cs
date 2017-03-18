@@ -17,20 +17,20 @@ namespace Store.Service
             m_purchasedBooks = purchasedBooks;
         }
 
-        public void purchase(Book selectedBook)
+        public void Purchase(Book selectedBook)
         {
 
-            if (!isMoneyEnoughForPurchase(selectedBook))
+            if (!IsMoneyEnoughForPurchase(selectedBook))
             {
                 throw new ArgumentException("No money to buy selected book", nameof(selectedBook));
             }
 
-            m_wallet.deductAmount(selectedBook.Price);
-            m_purchasedBooks.addAsync(selectedBook);
+            m_wallet.DeductAmount(selectedBook.Price);
+            m_purchasedBooks.AddAsync(selectedBook);
 
         }
         
-        public bool isMoneyEnoughForPurchase(Book selectedBook)
+        public bool IsMoneyEnoughForPurchase(Book selectedBook)
         {
             return selectedBook.Price <= m_wallet.CurrentAmount;
         }

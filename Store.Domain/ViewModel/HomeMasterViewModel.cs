@@ -1,9 +1,5 @@
 ﻿using Store.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.ViewModel
 {
@@ -13,10 +9,10 @@ namespace Store.ViewModel
         public HomeMasterViewModel()
         {
             Items = new ObservableRangeCollection<MasterPageItem>();
-            Items.AddRange(masterPageItems());
+            Items.AddRange(MasterPageItems());
         }
 
-        private IEnumerable<MasterPageItem> masterPageItems()
+        private IEnumerable<MasterPageItem> MasterPageItems()
         {
             MasterPageItem[] pageItems =
             {

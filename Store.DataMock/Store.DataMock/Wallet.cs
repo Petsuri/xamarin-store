@@ -1,9 +1,4 @@
 ﻿using Store.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.DataMock
 {
@@ -20,7 +15,7 @@ namespace Store.DataMock
             }
         }
 
-        public void deductAmount(decimal amount)
+        public void DeductAmount(decimal amount)
         {
             m_totalMoneyAmount -= amount;
         }

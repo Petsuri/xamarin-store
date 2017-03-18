@@ -1,8 +1,5 @@
 ﻿using Store.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Store.Repository
@@ -10,10 +7,10 @@ namespace Store.Repository
     public interface IBookRepository
     {
 
-        Task<IEnumerable<int>> loadAllPreviewItemIdsAsync();
-        Task<IEnumerable<BookPreviewItem>> loadPreviewItemsAsync(int startFrom, int takeCount);
+        Task<IEnumerable<int>> LoadAllPreviewBookIdsAsync();
+        Task<IEnumerable<BookPreview>> LoadPreviewBookAsync(int startFrom, int takeCount);
 
-        Task<Book> loadAsync(int id);
+        Task<Book> LoadAsync(int id);
 
     }
 }

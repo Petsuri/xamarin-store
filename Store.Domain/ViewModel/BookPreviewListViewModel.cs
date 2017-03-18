@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Store.ViewModel
 {
-    public class BookPreviewItemListViewModel : ViewModelBase
+    public class BookPreviewListViewModel : ViewModelBase
     {
 
         private const int LoadItemsCount = 5;
@@ -19,7 +19,7 @@ namespace Store.ViewModel
         private readonly IMessageQueue m_messaging;
         private readonly IBookRepository m_bookStore;
 
-        public BookPreviewItemListViewModel(IBookRepository bookStore, IMessageQueue messaging)
+        public BookPreviewListViewModel(IBookRepository bookStore, IMessageQueue messaging)
         {
             m_searchForMoreBooks = true;
             m_currentBookItemIndex = 0;
@@ -27,12 +27,12 @@ namespace Store.ViewModel
             m_bookStore = bookStore;
             m_messaging = messaging;
             
-            Books = new ObservableRangeCollection<BookPreviewItemViewModel>();
+            Books = new ObservableRangeCollection<BookPreviewViewModel>();
 
         }
 
 
-        public async void loadNextBooks()
+        public async void LoadNextBooks()
         {
             if (!m_searchForMoreBooks || IsBusy)
             {
@@ -41,15 +41,15 @@ namespace Store.ViewModel
 
             IsBusy = true;
 
-            IEnumerable<BookPreviewItem> loadedBooks = await m_bookStore.loadPreviewItemsAsync(m_currentBookItemIndex, LoadItemsCount);
+            IEnumerable<BookPreview> loadedBooks = await m_bookStore.LoadPreviewBookAsync(m_currentBookItemIndex, LoadItemsCount);
             m_currentBookItemIndex += loadedBooks.Count();
             m_searchForMoreBooks = (loadedBooks.Count() == LoadItemsCount);
 
 
-            var bookViewModels = new List<BookPreviewItemViewModel>();
+            var bookViewModels = new List<BookPreviewViewModel>();
             foreach (var book in loadedBooks)
             {
-                bookViewModels.Add(new BookPreviewItemViewModel(book, m_messaging));
+                bookViewModels.Add(new BookPreviewViewModel(book, m_messaging));
             }
 
             Books.AddRange(bookViewModels);
@@ -58,12 +58,12 @@ namespace Store.ViewModel
 
         }
 
-        public void disableSelection()
+        public void DisableSelection()
         {
             changeBooksSelectableStatus(false);
         }
 
-        public void enableSelection()
+        public void EnableSelection()
         {
             changeBooksSelectableStatus(true);
         }
@@ -81,7 +81,7 @@ namespace Store.ViewModel
             get { return m_isBusy; }
             set { SetProperty(ref m_isBusy, value); }
         }
-        public ObservableRangeCollection<BookPreviewItemViewModel> Books { get; private set; }
+        public ObservableRangeCollection<BookPreviewViewModel> Books { get; private set; }
 
     }
 }

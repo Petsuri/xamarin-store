@@ -25,7 +25,7 @@
                              BindingContext="{Binding Path=Recommendation}">
 
                     <control:ElementList Orientation="Horizontal" IsEnabled="False"
-                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewItemViewModel"
+                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewViewModel"
                                          ElementsSource="{Binding Path=Books, Mode=OneWay}" />
 
                     <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 
@@ -43,7 +43,7 @@
                              BindingContext="{Binding Manga}">
 
                     <control:ElementList Orientation="Horizontal"
-                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewItemViewModel"
+                                         x:TypeArguments="views:StoreItemPreviewView, viewmodel:BookPreviewViewModel"
                                          ElementsSource="{Binding Path=Books, Mode=OneWay}" />
 
                     <ActivityIndicator IsVisible="{Binding Path=IsBusy, Mode=OneWay}" 

@@ -1,9 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using Store.ViewModel;
-using System;
 
 namespace Store.Ui.View
 {

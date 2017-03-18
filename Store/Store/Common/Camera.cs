@@ -1,8 +1,5 @@
 ﻿using Store.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -12,12 +9,12 @@ namespace Store.Ui.Common
 {
     internal class Camera : ICamera
     {
-        public bool isTakePhotoSupported()
+        public bool IsTakePhotoSupported()
         {
             return CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported;
         }
 
-        public async Task<byte[]> takePhotoAsync()
+        public async Task<byte[]> TakePhotoAsync()
         {
             var photoOptions = new StoreCameraMediaOptions()
             {

@@ -59,14 +59,14 @@ namespace Store.Ui
                 )
             );
 
-            container.RegisterType<BookPreviewItemListViewModel>(BookCategory.Category.Recommendation.ToString(),
+            container.RegisterType<BookPreviewListViewModel>(BookCategory.Category.Recommendation.ToString(),
                 new InjectionConstructor(
                     typeof(DataMock.RecommendationBookRepository),
                     typeof(IMessageQueue)
                 )
             );
 
-            container.RegisterType<BookPreviewItemListViewModel>(BookCategory.Category.Manga.ToString(),
+            container.RegisterType<BookPreviewListViewModel>(BookCategory.Category.Manga.ToString(),
                 new InjectionConstructor(
                     typeof(DataMock.MangaBookRepository),
                     typeof(IMessageQueue)
