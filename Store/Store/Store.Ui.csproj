@@ -39,7 +39,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Camera.cs" />
+    <Compile Include="Common\ValueChangedEventArgs.cs" />
     <Compile Include="Control\ElementList.cs" />
+    <Compile Include="Control\StarRatingBar.cs" />
     <Compile Include="Converter\BytesToBooleanConverter.cs" />
     <Compile Include="Converter\BytesToImageConverter.cs" />
     <Compile Include="Page\BookCoverPage.xaml.cs">

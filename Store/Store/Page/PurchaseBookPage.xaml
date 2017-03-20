@@ -186,49 +186,32 @@
                                             Text="{Binding Path=NewReview.Text, 
                                                            Mode=TwoWay}"/>
 
+                                    <control:StarRatingBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                                           x:Name="reviewstars"
+                                                           MaximumRating="5"
+                                                           Rating="{Binding Path=NewReview.Score, 
+                                                                            Mode=TwoWay}"
+                                                           HorizontalOptions="Center" />
 
-                                    <StackLayout Grid.Row="1" Grid.Column="0"
-                                                    Orientation="Horizontal"
-                                                    HorizontalOptions="CenterAndExpand">
+                                    <Image Grid.Row="2" Grid.Column="0"
+                                           HorizontalOptions="End"
+                                            VerticalOptions="Start"
+                                            WidthRequest="100"
+                                            Source="{Binding Path=NewReview.Photo,
+                                                            Mode=OneWay,
+                                                            Converter={converter:BytesToImageConverter}}" />
 
-                                        <Label Text="{Binding Source={x:Reference Name=reviewStars},
-                                                              Path=Value,
-                                                              StringFormat='Arvio: {0}'}"
-                                                HorizontalTextAlignment="Center"/>
-                                        <Image Source="ic_star_black_18dp.png" />
+                                    <Image Grid.Row="2" Grid.Column="1"
+                                           Source="ic_add_a_photo_black_24dp.png"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Start">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                    Command="{Binding Path=NewReview.TakePhoto}" />
+                                        </Image.GestureRecognizers>
 
-                                    </StackLayout>
-
-                                    <Stepper Grid.Row="2" Grid.Column="0"
-                                             x:Name="reviewStars"
-                                             Increment="1"
-                                             Minimum="1"
-                                             Maximum="5"
-                                             Value="{Binding Path=NewReview.Score, Mode=TwoWay}"
-                                             HorizontalOptions="Center" />
-
-                                    <StackLayout Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"
-                                                    Orientation="Horizontal">
-
-                                        <Image HorizontalOptions="Start"
-                                               VerticalOptions="Start"
-                                               WidthRequest="100"
-                                               Source="{Binding Path=NewReview.Photo,
-                                                                Mode=OneWay,
-                                                                Converter={converter:BytesToImageConverter}}" />
-
-                                        <Image Source="ic_add_a_photo_black_24dp.png"
-                                                HorizontalOptions="End"
-                                                VerticalOptions="Start">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                                      Command="{Binding Path=NewReview.TakePhoto}" />
-                                            </Image.GestureRecognizers>
-
-                                        </Image>
-
-                                    </StackLayout>
-
+                                    </Image>
+                                    
                                     <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
                                             HorizontalOptions="CenterAndExpand"
                                             Text="Lähetä"
