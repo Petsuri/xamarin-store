@@ -26,8 +26,10 @@ namespace Store.Droid.Control
             var isElementAttached = (e.NewElement != null);
             if (isElementAttached)
             {
+                SetRatingPrecision();
                 SetMaximumRating();
                 SetRating();
+                SetIsReadOnly();
 
                 Control.OnRatingBarChangeListener = this;
             }
@@ -50,17 +52,36 @@ namespace Store.Droid.Control
             {
                 SetMaximumRating();
             }
+            else if (e.PropertyName == StarRatingBar.IsReadOnlyProperty.PropertyName)
+            {
+                SetIsReadOnly();
+            }
+            else if (e.PropertyName == StarRatingBar.RatingPrecisionProperty.PropertyName)
+            {
+                SetRatingPrecision();
+            }
             
+        }
+
+
+        private void SetRatingPrecision()
+        {
+            Control.StepSize = Element.RatingPrecision;
         }
 
         private void SetRating()
         {
             Control.Rating = Element.Rating;
         }
-
+        
         private void SetMaximumRating()
         {
-            Control.Max = Element.MaximumRating;
+            Control.NumStars = Element.MaximumRating;
+        }
+
+        private void SetIsReadOnly()
+        {
+            Control.IsIndicator = Element.IsReadOnly;
         }
 
         public void OnRatingChanged(RatingBar ratingBar, float rating, bool fromUser)

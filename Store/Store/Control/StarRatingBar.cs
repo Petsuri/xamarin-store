@@ -10,7 +10,7 @@ namespace Store.Ui.Control
     {
 
         public event EventHandler<ValueChangedEventArgs<float>> RatingChanged;
-
+        public event EventHandler<ValueChangedEventArgs<bool>> IsReadOnlyChanged;
 
         public static readonly BindableProperty RatingProperty =
             BindableProperty.Create(
@@ -41,6 +41,24 @@ namespace Store.Ui.Control
                     return 0 <= (int)rating;
                 });
 
+        public static readonly BindableProperty IsReadOnlyProperty =
+            BindableProperty.Create(
+                nameof(IsReadOnly),
+                typeof(bool),
+                typeof(StarRatingBar),
+                false,
+                propertyChanged: (obj, oldValue, newValue) =>
+                {
+                    var bar = (obj as StarRatingBar);
+                    bar.IsReadOnlyChanged?.Invoke(obj, new ValueChangedEventArgs<bool>((bool)oldValue, (bool)newValue));
+                });
+
+        public static readonly BindableProperty RatingPrecisionProperty =
+            BindableProperty.Create(
+                nameof(RatingPrecision),
+                typeof(float),
+                typeof(StarRatingBar),
+                1f);
 
 
         public float Rating
@@ -55,5 +73,16 @@ namespace Store.Ui.Control
             set { SetValue(MaximumRatingProperty, value); }
         }
 
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        public float RatingPrecision
+        {
+            get { return (float)GetValue(RatingPrecisionProperty); }
+            set { SetValue(RatingPrecisionProperty, value); }
+        }
     }
 }
