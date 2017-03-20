@@ -2,7 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:Store.Ui.Converter"
-             x:Class="Store.Ui.View.ReviewView">
+             x:Class="Store.Ui.View.ReadReviewView">
 
     <Grid>
 

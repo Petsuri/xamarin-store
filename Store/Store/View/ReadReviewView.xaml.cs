@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace Store.Ui.View
 {
-    public partial class ReviewView : ContentView
+    public partial class ReadReviewView : ContentView
     {
-        public ReviewView()
+        public ReadReviewView()
         {
             InitializeComponent();
         }

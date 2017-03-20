@@ -152,7 +152,7 @@
                        FontAttributes="Bold"/>
 
                 <control:ElementList Grid.Row="2"
-                                     x:TypeArguments="views:ReviewView, model:Review"
+                                     x:TypeArguments="views:ReadReviewView, model:Review"
                                      ElementsSource="{Binding Path=Reviews}" />
             </Grid>
 

@@ -51,8 +51,8 @@
     <Compile Include="Page\UserBookListPage.xaml.cs">
       <DependentUpon>UserBookListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ReviewView.xaml.cs">
-      <DependentUpon>ReviewView.xaml</DependentUpon>
+    <Compile Include="View\ReadReviewView.xaml.cs">
+      <DependentUpon>ReadReviewView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page\HomeDetailPage.xaml.cs">
       <DependentUpon>HomeDetailPage.xaml</DependentUpon>
@@ -154,7 +154,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\ReviewView.xaml">
+    <EmbeddedResource Include="View\ReadReviewView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
