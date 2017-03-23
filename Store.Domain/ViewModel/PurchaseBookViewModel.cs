@@ -11,7 +11,8 @@ namespace Store.ViewModel
     public class PurchaseBookViewModel : ViewModelBase
     {
 
-        public const string ShowBookCoverMessage = "showShowBookCover";
+        public const string ShowBookCoverMessage = "Show book cover";
+        public const string BookPurchased = "Book purchased";
         
         private bool m_isBusy = false;
         private int? m_currentBookId = null;
@@ -40,7 +41,7 @@ namespace Store.ViewModel
             NewReview = newReview;
             Reviews = new ObservableRangeCollection<Review>();
 
-            PurchaseBook = CreateBuyBookCommand(purchaseService, wishListRepository);
+            PurchaseBook = CreateBuyBookCommand(purchaseService, wishListRepository, messaging);
             AddWishList = CreateAddWishListCommand(purchaseService, wishListRepository);
             ShowBookCover = CreateShowBookCoverCommand(messaging);
             SubmitNewReview = CreateSubitNewReviewCommand(reviewRepository);
@@ -49,9 +50,12 @@ namespace Store.ViewModel
             {
                 ChangeCanCommanExecute(SubmitNewReview);
             };
+
         }
 
-        private ICommand CreateBuyBookCommand(PurchaseBookService purchaseService, IWishListRepository wishListRepository)
+        private ICommand CreateBuyBookCommand(PurchaseBookService purchaseService, 
+                                              IWishListRepository wishListRepository,
+                                              IMessageQueue messaging)
         {
             return new Command(
                execute: async () =>
@@ -64,6 +68,8 @@ namespace Store.ViewModel
 
                    ChangeCanCommanExecute(PurchaseBook);
                    UpdateCanBookBeAddedToWishList(Book);
+
+                   messaging.Send(this, BookPurchased, Book);
 
                    IsBusy = false;  
 

@@ -30,6 +30,7 @@ namespace Store.Droid
         private void RegisterDependecies(IUnityContainer container)
         {
             container.RegisterType<IApplication, AndroidApplication>();
+            container.RegisterType<INotificationCenter, PushNotificationCenter>();
         }
         
     }

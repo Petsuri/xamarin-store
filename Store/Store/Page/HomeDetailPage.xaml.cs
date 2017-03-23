@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using Xamarin.Forms;
 using Store.Domain;
 using Store.Repository;
+using System;
 
 namespace Store.Ui.Page
 {
@@ -78,7 +79,7 @@ namespace Store.Ui.Page
 
         private bool IsScrollectToRightEnd(ScrollView sv)
         {
-            return (sv.ScrollX >= (sv.ContentSize.Width - sv.Width));
+            return (Math.Ceiling(sv.ScrollX) >= (sv.ContentSize.Width - sv.Width));
         }
 
     }

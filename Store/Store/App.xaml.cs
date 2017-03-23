@@ -14,18 +14,26 @@ namespace Store.Ui
     {
 
         public static IUnityContainer Container { get; private set; }
-
-
+        
         public App()
         {
             InitializeComponent();
 
             Container = new UnityContainer();
             RegisterDependencies(Container);
+            var messaging = Container.Resolve<IMessageQueue>();
+            messaging.Subscribe<PurchaseBookViewModel, Book>(this, PurchaseBookViewModel.BookPurchased, ShowBookPurchasedNotification);
+
 
             MainPage = new HomePage();
 
 
+        }
+
+        private void ShowBookPurchasedNotification(PurchaseBookViewModel sender, Book purchasedBook)
+        {
+            var notifications = Container.Resolve<INotificationCenter>();
+            notifications.Publish(purchasedBook.Name, "Ostettu hintaan " + purchasedBook.Price + "€");
         }
 
         private static void RegisterDependencies(IUnityContainer container)
