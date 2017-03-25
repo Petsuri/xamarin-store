@@ -32,8 +32,8 @@ namespace Store.Ui
 
         private void ShowBookPurchasedNotification(PurchaseBookViewModel sender, Book purchasedBook)
         {
-            var notifications = Container.Resolve<INotificationCenter>();
-            notifications.Publish(purchasedBook.Name, "Ostettu hintaan " + purchasedBook.Price + "€");
+            var notifications = Container.Resolve<INotifications>();
+            notifications.BookPurchased(purchasedBook);
         }
 
         private static void RegisterDependencies(IUnityContainer container)

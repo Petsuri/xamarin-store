@@ -33,7 +33,7 @@ namespace Store.Droid.Activities
         private void RegisterDependecies(IUnityContainer container)
         {
             container.RegisterType<IApplication, AndroidApplication>();
-            container.RegisterType<INotificationCenter, PushNotificationCenter>();
+            container.RegisterType<INotifications, AndroidNotifications>();
             container.RegisterType<ICamera, AndroidCamera>();
         }
         
