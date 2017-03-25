@@ -6,11 +6,14 @@ using Android.OS;
 using Store.Ui;
 using Microsoft.Practices.Unity;
 using Store.Domain;
+using Xamarin.Forms.Platform.Android;
+using Xamarin.Forms;
+using Store.Droid.Platform;
 
-namespace Store.Droid
+namespace Store.Droid.Activities
 {
     [Activity(Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -19,7 +22,7 @@ namespace Store.Droid
 
             base.OnCreate(bundle);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+            Forms.Init(this, bundle);
             LoadApplication(new App());
 
             RegisterDependecies(App.Container);
@@ -31,6 +34,7 @@ namespace Store.Droid
         {
             container.RegisterType<IApplication, AndroidApplication>();
             container.RegisterType<INotificationCenter, PushNotificationCenter>();
+            container.RegisterType<ICamera, AndroidCamera>();
         }
         
     }

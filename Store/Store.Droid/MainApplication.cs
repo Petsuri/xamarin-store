@@ -4,10 +4,11 @@ using Android.App;
 using Android.OS;
 using Android.Runtime;
 using Plugin.CurrentActivity;
+using Android.Util;
 
 namespace Store.Droid
 {
-	//You can specify additional application information in this attribute
+
     [Application]
     public class MainApplication : Application, Application.IActivityLifecycleCallbacks
     {
@@ -20,7 +21,18 @@ namespace Store.Droid
         {
             base.OnCreate();
             RegisterActivityLifecycleCallbacks(this);
-            //A great place to initialize Xamarin.Insights and Dependency Services!
+            
+            AndroidEnvironment.UnhandledExceptionRaiser += (sender, args) =>
+            {
+                Log.Error("xamarin-store", args.Exception.ToString());
+                args.Handled = true;
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            {
+                Log.Error("xamarin-store", args.ExceptionObject.ToString());
+            };
+
         }
 
         public override void OnTerminate()

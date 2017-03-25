@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace Store.Droid
+namespace Store.Droid.Activities
 {
     [Activity(Label = "Petrin kauppa", Icon = "@drawable/petrinkauppa", Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class SplashScreen : Activity

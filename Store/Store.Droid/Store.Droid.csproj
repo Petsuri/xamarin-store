@@ -129,14 +129,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndroidApplication.cs" />
+    <Compile Include="PhotoTakenEventArgs.cs" />
+    <Compile Include="Platform\AndroidApplication.cs" />
+    <Compile Include="Activities\CameraActivity.cs" />
     <Compile Include="Control\StarRatingBarRenderer.cs" />
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
-    <Compile Include="PushNotificationCenter.cs" />
+    <Compile Include="Platform\PushNotificationCenter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SplashScreen.cs" />
+    <Compile Include="Activities\SplashScreen.cs" />
+    <Compile Include="Platform\AndroidCamera.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

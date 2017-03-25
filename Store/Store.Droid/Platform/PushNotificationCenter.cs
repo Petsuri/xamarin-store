@@ -10,11 +10,10 @@ namespace Store.Droid
     {
         public void Publish(string title, string message)
         {
+            var currentContext = Application.Context;
+            var manager = currentContext.GetSystemService(Context.NotificationService) as NotificationManager;
 
-            var currentActivity = CrossCurrentActivity.Current.Activity;
-            var manager = currentActivity.GetSystemService(Context.NotificationService) as NotificationManager;
-
-            var builder = new Notification.Builder(currentActivity);
+            var builder = new Notification.Builder(currentContext);
             var notification = builder.SetContentTitle(title)
                                       .SetContentText(message)
                                       .SetSmallIcon(Resource.Drawable.ic_collections_bookmark_black_18dp)

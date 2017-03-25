@@ -39,7 +39,6 @@ namespace Store.Ui
         private static void RegisterDependencies(IUnityContainer container)
         {
             container.RegisterType<IMessageQueue, XamarinMessageQueue>();
-            container.RegisterType<ICamera, Camera>();
 
             container.RegisterType<IWallet, DataMock.Wallet>();
             container.RegisterType<IReviewRepository, DataMock.BookReviewRepository>();
