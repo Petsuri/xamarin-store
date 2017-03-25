@@ -27,11 +27,11 @@ namespace Store.ViewModel
         private Book m_book;
 
         public PurchaseBookViewModel(IBookRepository bookRepository, 
-                             IReviewRepository reviewRepository, 
-                             IMessageQueue messaging, 
-                             IWishListRepository wishListRepository,
-                             WriteReviewViewModel newReview,
-                             PurchaseBookService purchaseService)
+                                     IReviewRepository reviewRepository, 
+                                     IMessageQueue messaging, 
+                                     IWishListRepository wishListRepository,
+                                     WriteReviewViewModel newReview,
+                                     PurchaseBookService purchaseService)
         {
             m_booksRepository = bookRepository;
             m_reviewRepository = reviewRepository;

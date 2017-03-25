@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Store.Ui.Control;assembly=Store.Ui"
+             xmlns:converter="clr-namespace:Store.Ui.Converter;assembly=Store.Ui"
+             x:Class="Store.Ui.View.WriteReviewView">
+
+    <TableView Intent="Data"
+               HasUnevenRows="True">
+        <TableRoot>
+
+            <TableSection Title="Arvioi tämä kirja">
+                <ViewCell>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <Editor Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                Keyboard="Text" 
+                                HeightRequest="100"
+                                Text="{Binding Path=Text, 
+                                               Mode=TwoWay}"/>
+
+                        <control:StarRatingBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                               x:Name="reviewstars"
+                                               MaximumRating="5"
+                                               Rating="{Binding Path=Score, 
+                                                                Mode=TwoWay}"
+                                               HorizontalOptions="Center" />
+
+                        <Image Grid.Row="2" Grid.Column="0"
+                               HorizontalOptions="End"
+                               VerticalOptions="Start"
+                               WidthRequest="100"
+                               Source="{Binding Path=Photo,
+                                                Mode=OneWay,
+                                                Converter={converter:BytesToImageConverter}}" />
+
+                        <Image Grid.Row="2" Grid.Column="1"
+                               Source="ic_add_a_photo_black_24dp.png"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Start">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Command="{Binding Path=TakePhoto}" />
+                            </Image.GestureRecognizers>
+
+                        </Image>
+                    </Grid>
+                </ViewCell>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+
+</ContentView>

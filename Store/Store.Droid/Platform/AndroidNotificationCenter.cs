@@ -1,8 +1,5 @@
-
-using System;
 using Android.App;
 using Android.Content;
-using Plugin.CurrentActivity;
 using Store.Domain;
 using Store.Model;
 using Android.Graphics;
