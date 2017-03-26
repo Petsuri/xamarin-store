@@ -1,10 +1,8 @@
-﻿using Store.Domain;
-using Store.Model;
-using Store.Repository;
+﻿using Store.Model;
 using Store.Service;
 using System.Windows.Input;
-using System;
-using System.Threading.Tasks;
+using Store.Interface.Repository;
+using Store.Interface.Domain;
 
 namespace Store.ViewModel
 {

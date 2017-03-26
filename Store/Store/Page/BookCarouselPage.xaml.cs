@@ -1,11 +1,11 @@
-﻿using Store.Domain;
-using Store.Model;
+﻿using Store.Model;
 using System.Collections.Generic;
 using System.Linq;
 
 using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.ViewModel;
+using Store.Interface.Domain;
 
 namespace Store.Ui.Page
 {

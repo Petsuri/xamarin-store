@@ -36,13 +36,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
-    <Compile Include="Domain\IApplication.cs" />
-    <Compile Include="Domain\ICamera.cs" />
-    <Compile Include="Domain\IMessageQueue.cs" />
-    <Compile Include="Domain\IWallet.cs" />
-    <Compile Include="Repository\IBookRepository.cs" />
-    <Compile Include="Repository\IPurchasedBooksRepository.cs" />
-    <Compile Include="Repository\IReviewRepository.cs" />
+    <Compile Include="Interface\Platform\IApplication.cs" />
+    <Compile Include="Interface\Platform\ICamera.cs" />
+    <Compile Include="Interface\Domain\IMessageQueue.cs" />
+    <Compile Include="Interface\Domain\IWallet.cs" />
+    <Compile Include="Interface\Platform\IFileInformation.cs" />
+    <Compile Include="Interface\Repository\IBookRepository.cs" />
+    <Compile Include="Interface\Repository\IPurchasedBooksRepository.cs" />
+    <Compile Include="Interface\Repository\IReviewRepository.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\BookCategory.cs" />
     <Compile Include="Model\MasterPageItem.cs" />
@@ -50,8 +51,8 @@
     <Compile Include="Model\Review.cs" />
     <Compile Include="ObservableRangeCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IWishListRepository.cs" />
-    <Compile Include="Domain\INotifications.cs" />
+    <Compile Include="Interface\Repository\IWishListRepository.cs" />
+    <Compile Include="Interface\Platform\INotifications.cs" />
     <Compile Include="Service\PurchaseBookService.cs" />
     <Compile Include="ViewModel\BookPreviewListViewModel.cs" />
     <Compile Include="ViewModel\PurchaseBookViewModel.cs" />

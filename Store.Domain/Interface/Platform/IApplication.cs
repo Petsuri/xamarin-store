@@ -1,5 +1,5 @@
 ﻿
-namespace Store.Domain
+namespace Store.Interface.Platform
 {
     public interface IApplication
     {

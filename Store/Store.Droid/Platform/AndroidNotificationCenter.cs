@@ -1,8 +1,8 @@
 using Android.App;
 using Android.Content;
-using Store.Domain;
 using Store.Model;
 using Android.Graphics;
+using Store.Interface.Platform;
 
 namespace Store.Droid
 {

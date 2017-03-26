@@ -4,9 +4,9 @@ using Store.ViewModel;
 using Microsoft.Practices.Unity;
 
 using Xamarin.Forms;
-using Store.Domain;
-using Store.Repository;
 using System;
+using Store.Interface.Domain;
+using Store.Interface.Repository;
 
 namespace Store.Ui.Page
 {

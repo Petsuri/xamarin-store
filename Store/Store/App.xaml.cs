@@ -1,7 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
-using Store.Domain;
+using Store.Interface.Domain;
+using Store.Interface.Platform;
+using Store.Interface.Repository;
 using Store.Model;
-using Store.Repository;
 using Store.Service;
 using Store.Ui.Common;
 using Store.Ui.Page;

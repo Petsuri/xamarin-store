@@ -2,9 +2,9 @@
 
 using Xamarin.Forms;
 using Microsoft.Practices.Unity;
-using Store.Domain;
-using Store.Repository;
 using System;
+using Store.Interface.Repository;
+using Store.Interface.Platform;
 
 namespace Store.Ui.Page
 {

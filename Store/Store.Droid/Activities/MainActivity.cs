@@ -5,10 +5,10 @@ using Android.OS;
 
 using Store.Ui;
 using Microsoft.Practices.Unity;
-using Store.Domain;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms;
 using Store.Droid.Platform;
+using Store.Interface.Platform;
 
 namespace Store.Droid.Activities
 {

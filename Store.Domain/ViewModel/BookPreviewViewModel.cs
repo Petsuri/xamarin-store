@@ -1,4 +1,4 @@
-﻿using Store.Domain;
+﻿using Store.Interface.Domain;
 using Store.Model;
 using System.Windows.Input;
 

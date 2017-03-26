@@ -1,6 +1,6 @@
-﻿using Store.Domain;
+﻿using Store.Interface.Domain;
+using Store.Interface.Repository;
 using Store.Model;
-using Store.Repository;
 using System.Collections.Generic;
 using System.Linq;
 

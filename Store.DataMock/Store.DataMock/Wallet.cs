@@ -1,4 +1,4 @@
-﻿using Store.Domain;
+﻿using Store.Interface.Domain;
 
 namespace Store.DataMock
 {

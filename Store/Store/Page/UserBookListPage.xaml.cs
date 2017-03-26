@@ -1,13 +1,12 @@
-﻿using Store.Repository;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.Model;
 using Store.Ui.View;
-using Store.Domain;
 using Store.ViewModel;
+using Store.Interface.Domain;
 
 namespace Store.Ui.Page
 {

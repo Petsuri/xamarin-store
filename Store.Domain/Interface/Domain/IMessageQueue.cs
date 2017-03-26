@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Store.Domain
+namespace Store.Interface.Domain
 {
     public interface IMessageQueue
     {

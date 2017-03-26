@@ -1,4 +1,4 @@
-﻿namespace Store.Domain
+﻿namespace Store.Interface.Domain
 {
     public interface IWallet
     {

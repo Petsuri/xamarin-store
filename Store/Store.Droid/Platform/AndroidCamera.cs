@@ -1,25 +1,9 @@
-
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Store.Domain;
-using Xamarin.Forms.Platform.Android;
-using Android.Hardware.Camera2;
-using Plugin.CurrentActivity;
-using Android.Provider;
-using Java.IO;
-using Android.Net;
-using Xamarin.Forms;
 using Android.Content.PM;
-using Plugin.Media;
 using Store.Droid.Activities;
+using Store.Interface.Platform;
 
 namespace Store.Droid.Platform
 {
@@ -31,7 +15,7 @@ namespace Store.Droid.Platform
         private Context m_currentContext;
         private bool m_isCameraAvailable;
 
-        public AndroidCamera() : base()
+        public AndroidCamera()
         {
             var currentContext = Android.App.Application.Context;
             m_currentContext = currentContext;

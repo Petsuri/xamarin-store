@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Store.Domain
+namespace Store.Interface.Platform
 {
     public interface ICamera
     {

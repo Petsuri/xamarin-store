@@ -1,6 +1,6 @@
 ﻿using Store.Model;
 
-namespace Store.Domain
+namespace Store.Interface.Platform
 {
     public interface INotifications
     {

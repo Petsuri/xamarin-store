@@ -1,5 +1,4 @@
-
-using Store.Domain;
+using Store.Interface.Platform;
 
 namespace Store.Droid
 {

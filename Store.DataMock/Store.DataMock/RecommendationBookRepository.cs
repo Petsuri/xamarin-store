@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Store.Model;
 using System.IO;
 using System.Reflection;
-using Store.Repository;
+using Store.Interface.Repository;
 
 namespace Store.DataMock
 {

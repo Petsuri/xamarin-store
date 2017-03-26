@@ -1,9 +1,8 @@
-﻿using Store.Repository;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Store.Model;
-using System;
 using System.Linq;
+using Store.Interface.Repository;
 
 namespace Store.DataMock
 {

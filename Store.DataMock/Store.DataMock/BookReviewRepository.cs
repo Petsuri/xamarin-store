@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Store.Model;
-using Store.Repository;
+using Store.Interface.Repository;
 
 namespace Store.DataMock
 {

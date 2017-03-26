@@ -1,9 +1,9 @@
-﻿using Store.Domain;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.IO;
+using Store.Interface.Platform;
 
 namespace Store.Ui.Common
 {

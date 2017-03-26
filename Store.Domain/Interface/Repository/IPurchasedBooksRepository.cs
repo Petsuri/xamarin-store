@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Store.Repository
+namespace Store.Interface.Repository
 {
     public interface IPurchasedBooksRepository
     {
