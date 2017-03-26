@@ -20,14 +20,18 @@ namespace Store.Droid
             pictureStyle.SetBigContentTitle(book.Name);
             pictureStyle.SetSummaryText(string.Format("Ostettu hintaan {1} €", book.Name, book.Price));
 
+            long[] vibrationPattern = { 100, 300, 500, 700, 1000 };
+
             var notification = new Notification.Builder(currentContext)
                 .SetStyle(pictureStyle)
                 .SetPriority((int)NotificationPriority.High)
                 .SetCategory(Notification.CategoryPromo)
                 .SetSmallIcon(Resource.Drawable.ic_collections_bookmark_black_18dp)
+                .SetVisibility(NotificationVisibility.Public)
                 .SetLargeIcon(appIcon)
                 .SetContentText("Kirja ostettu")
                 .SetContentTitle(book.Name)
+                .SetVibrate(vibrationPattern)
                 .Build();
             
 

@@ -2,6 +2,7 @@
 using Store.Interface.Domain;
 using Store.Interface.Platform;
 using Store.Interface.Repository;
+using Store.LocalDatabase.Connection;
 using Store.Model;
 using Store.Service;
 using Store.Ui.Common;
@@ -43,49 +44,13 @@ namespace Store.Ui
 
             container.RegisterType<IWallet, DataMock.Wallet>();
             container.RegisterType<IReviewRepository, DataMock.BookReviewRepository>();
-            container.RegisterType<IWishListRepository, DataMock.WishListRepository>();
-            container.RegisterType<IPurchasedBooksRepository, DataMock.PurchasedBooksRepository>();
-            container.RegisterType<IBookRepository, DataMock.MangaBookRepository>(BookCategory.Category.Manga.ToString());
-            container.RegisterType<IBookRepository, DataMock.RecommendationBookRepository>(BookCategory.Category.Recommendation.ToString());
-
-            container.RegisterType<PurchaseBookViewModel>(BookCategory.Category.Recommendation.ToString(),
-                new InjectionConstructor(
-                    typeof(DataMock.RecommendationBookRepository), 
-                    typeof(DataMock.BookReviewRepository), 
-                    typeof(XamarinMessageQueue), 
-                    typeof(DataMock.WishListRepository),
-                    typeof(WriteReviewViewModel),
-                    typeof(PurchaseBookService)
-                )
-            );
-
-
-            container.RegisterType<PurchaseBookViewModel>(BookCategory.Category.Manga.ToString(),
-                new InjectionConstructor(
-                    typeof(DataMock.MangaBookRepository),
-                    typeof(DataMock.BookReviewRepository),
-                    typeof(XamarinMessageQueue),
-                    typeof(DataMock.WishListRepository),
-                    typeof(WriteReviewViewModel),
-                    typeof(PurchaseBookService)
-                )
-            );
-
-            container.RegisterType<BookPreviewListViewModel>(BookCategory.Category.Recommendation.ToString(),
-                new InjectionConstructor(
-                    typeof(DataMock.RecommendationBookRepository),
-                    typeof(IMessageQueue)
-                )
-            );
-
-            container.RegisterType<BookPreviewListViewModel>(BookCategory.Category.Manga.ToString(),
-                new InjectionConstructor(
-                    typeof(DataMock.MangaBookRepository),
-                    typeof(IMessageQueue)
-                )   
-            );
-
+            //container.RegisterType<IWishListRepository, DataMock.WishListRepository>();
+            //container.RegisterType<IPurchasedBooksRepository, DataMock.PurchasedBooksRepository>();
+            container.RegisterType<IBookRepository, DataMock.BookRepository>();
+            container.RegisterType<IWishListRepository, LocalDatabase.PersistentWishListRepository>();
+            container.RegisterType<IPurchasedBooksRepository, LocalDatabase.PersistentPurchasedBooksRepository>();
         }
+
 
         protected override void OnStart()
         {

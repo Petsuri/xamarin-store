@@ -14,12 +14,12 @@ namespace Store.Ui.Page
         public int BookId { get; private set; }
 
         
-        public PurchaseBookPage(int bookId, BookCategory.Category category)
+        public PurchaseBookPage(int bookId)
         {
             InitializeComponent();
             this.BookId = bookId;
             
-            m_model = App.Container.Resolve<PurchaseBookViewModel>(category.ToString());
+            m_model = App.Container.Resolve<PurchaseBookViewModel>();
             BindingContext = m_model;
 
         }

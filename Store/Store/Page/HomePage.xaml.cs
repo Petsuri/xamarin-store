@@ -68,6 +68,22 @@ namespace Store.Ui.Page
             }
                         
         }
-        
+
+        private async void GivePurchasedBooksAway(object sender, EventArgs e)
+        {
+            IsPresented = false;
+
+            var repository = App.Container.Resolve<IPurchasedBooksRepository>();
+            await repository.RemoveAllAsync();
+
+        }
+
+        private async void ClearWishList(object sender, EventArgs e)
+        {
+            IsPresented = false;
+
+            var repository = App.Container.Resolve<IWishListRepository>();
+            await repository.RemoveAllAsync();
+        }
     }
 }

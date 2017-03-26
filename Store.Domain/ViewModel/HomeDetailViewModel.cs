@@ -1,4 +1,5 @@
 ﻿using Store.Interface.Domain;
+using Store.Model;
 
 namespace Store.ViewModel
 {
@@ -29,8 +30,8 @@ namespace Store.ViewModel
         public void LoadItems()
         {
             IsBusy = true;
-            Manga.LoadNextBooks();
-            Recommendation.LoadNextBooks();
+            Manga.LoadNextBooks(BookCategory.Category.Manga);
+            Recommendation.LoadNextBooks(BookCategory.Category.Recommendation);
             IsBusy = false;
         }
 

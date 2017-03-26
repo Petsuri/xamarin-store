@@ -11,5 +11,7 @@ namespace Store.Interface.Repository
         Task<IEnumerable<Book>> LoadAllAsync();
         Task<bool> IsPurchasedAsync(int bookId);
 
+        Task RemoveAllAsync();
+
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Store.Model;
 using System.Linq;
 using Store.Interface.Repository;
+using System;
 
 namespace Store.DataMock
 {
@@ -26,6 +27,12 @@ namespace Store.DataMock
         {
             await Task.Delay(250);
             return m_purchasedBooks;
+        }
+
+        public async Task RemoveAllAsync()
+        {
+            await Task.Delay(500);
+            m_purchasedBooks.Clear();
         }
     }
 }

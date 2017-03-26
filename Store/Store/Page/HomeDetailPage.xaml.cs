@@ -22,14 +22,12 @@ namespace Store.Ui.Page
 
             m_messaging = App.Container.Resolve<IMessageQueue>();
             m_viewModel = App.Container.Resolve<HomeDetailViewModel>();
-            m_viewModel.AddMangaList(App.Container.Resolve<BookPreviewListViewModel>(BookCategory.Category.Manga.ToString()));
-            m_viewModel.AddRecommendationList(App.Container.Resolve<BookPreviewListViewModel>(BookCategory.Category.Recommendation.ToString()));
+            m_viewModel.AddMangaList(App.Container.Resolve<BookPreviewListViewModel>());
+            m_viewModel.AddRecommendationList(App.Container.Resolve<BookPreviewListViewModel>());
             m_viewModel.LoadItems();
             
             BindingContext = m_viewModel;
-
-
-            
+                        
         }
 
         protected override void OnAppearing()
@@ -43,8 +41,8 @@ namespace Store.Ui.Page
                 m_viewModel.IsBusy = true;
                 m_viewModel.DisableSelections();
 
-                var books = App.Container.Resolve<IBookRepository>(selectedItem.Category.SelectedCategory.ToString());
-                var allPreviewIds = await books.LoadAllPreviewBookIdsAsync();
+                var books = App.Container.Resolve<IBookRepository>();
+                var allPreviewIds = await books.LoadAllPreviewBookIdsAsync(selectedItem.Category.SelectedCategory);
                 await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds, selectedItem.Category.SelectedCategory));
 
                 m_viewModel.IsBusy = false;
@@ -64,7 +62,7 @@ namespace Store.Ui.Page
         {            
             if (IsScrollectToRightEnd((ScrollView)sender))
             {
-                m_viewModel.Recommendation.LoadNextBooks();
+                m_viewModel.Recommendation.LoadNextBooks(BookCategory.Category.Recommendation);
             }
         }
 
@@ -72,7 +70,7 @@ namespace Store.Ui.Page
         {
             if (IsScrollectToRightEnd((ScrollView)sender))
             {
-                m_viewModel.Manga.LoadNextBooks();
+                m_viewModel.Manga.LoadNextBooks(BookCategory.Category.Manga);
             }
         }
 

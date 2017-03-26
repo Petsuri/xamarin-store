@@ -9,6 +9,7 @@ using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms;
 using Store.Droid.Platform;
 using Store.Interface.Platform;
+using Store.LocalDatabase.Connection;
 
 namespace Store.Droid.Activities
 {
@@ -32,9 +33,13 @@ namespace Store.Droid.Activities
 
         private void RegisterDependecies(IUnityContainer container)
         {
+            container.RegisterType<ICamera, AndroidCamera>();
             container.RegisterType<IApplication, AndroidApplication>();
             container.RegisterType<INotifications, AndroidNotifications>();
-            container.RegisterType<ICamera, AndroidCamera>();
+            container.RegisterType<IFileInformation, AndroidFileInformation>();
+
+            var fileInformation = container.Resolve<IFileInformation>();
+            container.RegisterInstance<IDatabase<LocalDatabase.Book>>(new Database<LocalDatabase.Book>(fileInformation));
         }
         
     }

@@ -33,9 +33,8 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MangaBookRepository.cs" />
     <Compile Include="PurchasedBooksRepository.cs" />
-    <Compile Include="RecommendationBookRepository.cs" />
+    <Compile Include="BookRepository.cs" />
     <Compile Include="BookReviewRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wallet.cs" />

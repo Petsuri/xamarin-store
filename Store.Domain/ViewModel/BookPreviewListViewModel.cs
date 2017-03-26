@@ -32,7 +32,7 @@ namespace Store.ViewModel
         }
 
 
-        public async void LoadNextBooks()
+        public async void LoadNextBooks(BookCategory.Category category)
         {
             if (!m_searchForMoreBooks || IsBusy)
             {
@@ -41,7 +41,7 @@ namespace Store.ViewModel
 
             IsBusy = true;
 
-            IEnumerable<BookPreview> loadedBooks = await m_bookStore.LoadPreviewBookAsync(m_currentBookItemIndex, LoadItemsCount);
+            IEnumerable<BookPreview> loadedBooks = await m_bookStore.LoadPreviewBookAsync(m_currentBookItemIndex, LoadItemsCount, category);
             m_currentBookItemIndex += loadedBooks.Count();
             m_searchForMoreBooks = (loadedBooks.Count() == LoadItemsCount);
 

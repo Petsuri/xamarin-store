@@ -9,10 +9,10 @@ namespace Store.Interface.Repository
 
         Task AddAsync(Book selectedBook);
         Task RemoveAsync(Book selectedBook);
+        Task RemoveAllAsync();
 
         Task<IEnumerable<Book>> LoadAllAsync();
 
         Task<bool> IsInWishListAsync(int bookId);
-
     }
 }

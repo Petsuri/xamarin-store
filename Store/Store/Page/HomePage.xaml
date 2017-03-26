@@ -23,6 +23,16 @@
                 <TableView Intent="Menu"
                            VerticalOptions="End">
                     <TableRoot>
+                        <TableSection Title="Asetukset">
+                            <TextCell Text="Lahjoita ostetut kirjat" Tapped="GivePurchasedBooksAway" />
+                            <TextCell Text="Tyhjennä toivelista" Tapped="ClearWishList" />
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+
+                <TableView Intent="Menu"
+                           VerticalOptions="End">
+                    <TableRoot>
                         <TableSection>
                             <TextCell Text="Sulje" Tapped="CloseProgram" />
                         </TableSection>

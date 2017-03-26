@@ -35,7 +35,7 @@ namespace Store.Ui.Page
 
             m_messaging.Subscribe<BookPreviewViewModel, BookPreview>(this, BookPreviewViewModel.ShowItemMessage, async (sender, book) =>
             {
-                await Navigation.PushAsync(new PurchaseBookPage(book.Id, book.Category.SelectedCategory));
+                await Navigation.PushAsync(new PurchaseBookPage(book.Id));
             });
 
             ShowBooks(m_books.ToList());

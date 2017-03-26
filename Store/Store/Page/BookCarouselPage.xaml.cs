@@ -36,7 +36,7 @@ namespace Store.Ui.Page
             IList<PurchaseBookPage> allBookPages = new List<PurchaseBookPage>();
             foreach (var id in allBookIds)
             {
-                allBookPages.Add(new PurchaseBookPage(id, selectedBookCategory));
+                allBookPages.Add(new PurchaseBookPage(id));
             }
 
             foreach (var page in allBookPages)
