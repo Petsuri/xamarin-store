@@ -33,12 +33,12 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PurchasedBooksRepository.cs" />
-    <Compile Include="BookRepository.cs" />
-    <Compile Include="BookReviewRepository.cs" />
+    <Compile Include="Repository\PurchasedBooksRepository.cs" />
+    <Compile Include="Repository\BookRepository.cs" />
+    <Compile Include="Repository\BookReviewRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wallet.cs" />
-    <Compile Include="WishListRepository.cs" />
+    <Compile Include="Domain\Wallet.cs" />
+    <Compile Include="Repository\WishListRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Store.Domain\Store.csproj">

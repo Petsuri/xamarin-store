@@ -1,14 +1,9 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Store.LocalDatabase
+namespace Store.LocalDatabase.Entity
 {
     [Table("UserLibrary")]
-    public class Book
+    internal class Book
     {
         public enum UserLibraryType
         {

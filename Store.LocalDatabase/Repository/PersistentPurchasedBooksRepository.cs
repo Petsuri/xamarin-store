@@ -1,12 +1,11 @@
 ﻿using Store.Interface.Repository;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Store.LocalDatabase.Connection;
-using Store.Interface.Platform;
 using System.Linq;
+using Store.LocalDatabase.Entity;
 
-namespace Store.LocalDatabase
+namespace Store.LocalDatabase.Repository
 {
     public class PersistentPurchasedBooksRepository : IPurchasedBooksRepository
     {

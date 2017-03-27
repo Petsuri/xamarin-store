@@ -3,6 +3,7 @@ using Store.Interface.Domain;
 using Store.Interface.Platform;
 using Store.Interface.Repository;
 using Store.LocalDatabase.Connection;
+using Store.LocalDatabase.Repository;
 using Store.Model;
 using Store.Service;
 using Store.Ui.Common;
@@ -47,8 +48,8 @@ namespace Store.Ui
             //container.RegisterType<IWishListRepository, DataMock.WishListRepository>();
             //container.RegisterType<IPurchasedBooksRepository, DataMock.PurchasedBooksRepository>();
             container.RegisterType<IBookRepository, DataMock.BookRepository>();
-            container.RegisterType<IWishListRepository, LocalDatabase.PersistentWishListRepository>();
-            container.RegisterType<IPurchasedBooksRepository, LocalDatabase.PersistentPurchasedBooksRepository>();
+            container.RegisterType<IWishListRepository, PersistentWishListRepository>();
+            container.RegisterType<IPurchasedBooksRepository, PersistentPurchasedBooksRepository>();
         }
 
 
