@@ -23,6 +23,7 @@ namespace Store.ViewModel
         private PurchaseBookService m_purchaseService;
        
         private Book m_book;
+        private BookViewModel m_bookViewModel;
 
         public PurchaseBookViewModel(IBookRepository bookRepository, 
                                      IReviewRepository reviewRepository, 
@@ -60,20 +61,21 @@ namespace Store.ViewModel
                {
                    IsBusy = true;
 
-                   purchaseService.PurchaseAsync(Book);
-                   IncreaseBookPurchasedCountBy(1);
-                   await wishListRepository.RemoveAsync(Book);
+                   purchaseService.PurchaseAsync(m_book);
+                   m_bookViewModel.PurchasedCount += 1;
+
+                   await wishListRepository.RemoveAsync(m_book);
 
                    ChangeCanCommanExecute(PurchaseBook);
-                   UpdateCanBookBeAddedToWishList(Book);
+                   UpdateCanBookBeAddedToWishList(m_book);
 
-                   messaging.Send(this, BookPurchased, Book);
+                   messaging.Send(this, BookPurchased, m_book);
 
                    IsBusy = false;  
 
                }, canExecute: () =>
                {
-                   return Book != null && purchaseService.IsMoneyEnoughForPurchase(Book);
+                   return Book != null && purchaseService.IsMoneyEnoughForPurchase(m_book);
                });
         }
 
@@ -86,7 +88,7 @@ namespace Store.ViewModel
 
                     m_canAddToWishList = false;
                     ChangeCanCommanExecute(AddWishList);
-                    await wishListRepository.AddAsync(Book);
+                    await wishListRepository.AddAsync(m_book);
 
                     IsBusy = false;
 
@@ -136,16 +138,7 @@ namespace Store.ViewModel
                 c.ChangeCanExecute();
             }
         }
-        
-        private void IncreaseBookPurchasedCountBy(int amount)
-        {
-            var currentBook = Book;
-            currentBook.PurchasedCount += amount;
-
-            Book = null;
-            Book = currentBook;
-        }
-
+   
         public async void Load(int bookId)
         {
             bool loadSelectedBook = (!m_currentBookId.HasValue || (m_currentBookId.Value != bookId));
@@ -156,9 +149,11 @@ namespace Store.ViewModel
 
                 IsBusy = true;
                 
-                Book = await m_booksRepository.LoadAsync(bookId);
+                var loadedBook = await m_booksRepository.LoadAsync(bookId);
+                m_book = loadedBook;
+                Book = new BookViewModel(loadedBook);
 
-                UpdateCanBookBeAddedToWishList(Book);
+                UpdateCanBookBeAddedToWishList(m_book);
 
                 ChangeCanCommanExecute(PurchaseBook);
                 ChangeCanCommanExecute(ShowBookCover);
@@ -190,10 +185,10 @@ namespace Store.ViewModel
             
         }
 
-        public Book Book
+        public BookViewModel Book
         {
-            get { return m_book;}
-            set { SetProperty(ref m_book, value); }
+            get { return m_bookViewModel;}
+            set { SetProperty(ref m_bookViewModel, value); }
         }
 
         public bool IsBusy
