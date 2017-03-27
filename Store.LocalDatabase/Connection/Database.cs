@@ -9,55 +9,41 @@ using Store.Interface.Platform;
 
 namespace Store.LocalDatabase.Connection
 {
-    public class Database<T> : IDatabase<T> where T : class, new()
+    public class Database : IDatabase
     {
         private const string DatabaseFileName = "xamarin-store.db";
-        private SQLiteConnection m_connection;
+        private SQLiteAsyncConnection m_connection;
 
         public Database(IFileInformation file)
         {
-            m_connection = new SQLiteConnection(file.GetPath(DatabaseFileName));
-            m_connection.CreateTable<T>();
+            m_connection = new SQLiteAsyncConnection(file.GetPath(DatabaseFileName));
+            
         }
 
-        public Task<int> InsertAsync(T item)
+        public async Task<int> InsertAsync<T>(T item) where T : class, new()
         {
-            return Task.Run<int>(() =>
-            {
-                return m_connection.Insert(item, typeof(T));
-            });   
+            return await m_connection.InsertAsync(item);
         }
 
-        public async Task UpdateAsync(T item)
+        public async Task UpdateAsync<T>(T item) where T : class, new()
         {
-            await Task.Run(() =>
-            {
-                m_connection.Update(item, typeof(T));
-            });
+            await  m_connection.UpdateAsync(item);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync<T>(T item) where T : class, new()
         {
-            await Task.Run(() =>
-            {
-                m_connection.Delete<T>(id);
-            });
+            await m_connection.DeleteAsync(item);
         }
 
-        public Task<T> LoadAsync(int id)
+        public async Task<T> LoadAsync<T>(int id) where T : class, new()
         {            
-            return Task.Run<T>(() =>
-            {
-                return m_connection.Get<T>(id);   
-            });
+            return await m_connection.GetAsync<T>(id);   
         }
-
-        public Task<IEnumerable<T>> LoadAllAsync()
+    
+        public async Task<IEnumerable<T>> LoadAllAsync<T>() where T : class, new()
         {
-            return Task.Run<IEnumerable<T>>(() =>
-            {
-                return m_connection.Table<T>();
-            });
+            IEnumerable<T> loadedItems = await m_connection.Table<T>().ToListAsync();
+            return loadedItems;
         }
         
     }

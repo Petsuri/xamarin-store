@@ -11,10 +11,10 @@ namespace Store.LocalDatabase
     public class PersistentPurchasedBooksRepository : IPurchasedBooksRepository
     {
 
-        private IDatabase<Book> m_database;
+        private IDatabase m_database;
         private IBookRepository m_bookRepository;
 
-        public PersistentPurchasedBooksRepository(IDatabase<Book> database, IBookRepository bookRepository)
+        public PersistentPurchasedBooksRepository(IDatabase database, IBookRepository bookRepository)
         {
             m_database = database;
             m_bookRepository = bookRepository;
@@ -48,13 +48,13 @@ namespace Store.LocalDatabase
             var allBooks = await LoadAllPurchasedBooksAsync();
             foreach(var book in allBooks)
             {
-                await m_database.DeleteAsync(book.Id);
+                await m_database.DeleteAsync(book);
             }
         }
 
         private async Task<IEnumerable<Book>> LoadAllPurchasedBooksAsync()
         {
-            return (await m_database.LoadAllAsync()).Where(item => item.BookType == Book.UserLibraryType.Purchased);
+            return (await m_database.LoadAllAsync<Book>()).Where(item => item.BookType == Book.UserLibraryType.Purchased);
         }
 
     }

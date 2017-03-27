@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Store.LocalDatabase.Connection;
-using System;
 
 namespace Store.LocalDatabase
 {
     public class PersistentWishListRepository : IWishListRepository
     {
 
-        private IDatabase<Book> m_database;
+        private IDatabase m_database;
         private IBookRepository m_bookRepository;
 
-        public PersistentWishListRepository(IDatabase<Book> database, IBookRepository bookRepository)
+        public PersistentWishListRepository(IDatabase database, IBookRepository bookRepository)
         {
             m_database = database;
             m_bookRepository = bookRepository;
@@ -41,7 +40,7 @@ namespace Store.LocalDatabase
             var foundBooks = (await LoadAllWishListBooksAsync()).Where(item => item.BookId == selectedBook.Id);
             foreach (var book in foundBooks)
             {
-                await m_database.DeleteAsync(book.Id);
+                await m_database.DeleteAsync(book);
             }
         }
 
@@ -50,7 +49,7 @@ namespace Store.LocalDatabase
             var removeBooks = await LoadAllWishListBooksAsync();
             foreach(var book in removeBooks)
             {
-                await m_database.DeleteAsync(book.Id);
+                await m_database.DeleteAsync(book);
             }
         }
 
@@ -61,7 +60,7 @@ namespace Store.LocalDatabase
 
         private async Task<IEnumerable<Book>> LoadAllWishListBooksAsync()
         {
-            return (await m_database.LoadAllAsync()).Where(item => item.BookType == Book.UserLibraryType.InWishList);
+            return (await m_database.LoadAllAsync<Book>()).Where(item => item.BookType == Book.UserLibraryType.InWishList);
         }
         
     }

@@ -39,7 +39,7 @@ namespace Store.Droid.Activities
             container.RegisterType<IFileInformation, AndroidFileInformation>();
 
             var fileInformation = container.Resolve<IFileInformation>();
-            container.RegisterInstance<IDatabase<LocalDatabase.Book>>(new Database<LocalDatabase.Book>(fileInformation));
+            container.RegisterInstance<IDatabase>(new Database(fileInformation));
         }
         
     }
