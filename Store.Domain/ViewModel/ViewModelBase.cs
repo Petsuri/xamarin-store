@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Store.ViewModel
 {
@@ -24,11 +25,19 @@ namespace Store.ViewModel
                 return false;
             }
         }
-
-
+        
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void ChangeCanCommandExecute(ICommand command)
+        {
+            var c = (command as Command);
+            if (c != null)
+            {
+                c.ChangeCanExecute();
+            }
         }
 
     }

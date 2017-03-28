@@ -3,6 +3,7 @@ using Store.Service;
 using System.Windows.Input;
 using Store.Interface.Repository;
 using Store.Interface.Domain;
+using System;
 
 namespace Store.ViewModel
 {
@@ -21,6 +22,7 @@ namespace Store.ViewModel
         private IReviewRepository m_reviewRepository;
         private IWishListRepository m_wishListRepository;
         private PurchaseBookService m_purchaseService;
+        private IMessageQueue m_messaging;
        
         private Book m_book;
         private BookViewModel m_bookViewModel;
@@ -36,6 +38,7 @@ namespace Store.ViewModel
             m_reviewRepository = reviewRepository;
             m_wishListRepository = wishListRepository;
             m_purchaseService = purchaseService;
+            m_messaging = messaging;
 
             NewReview = newReview;
             Reviews = new ObservableRangeCollection<Review>();
@@ -43,11 +46,11 @@ namespace Store.ViewModel
             PurchaseBook = CreateBuyBookCommand(purchaseService, wishListRepository, messaging);
             AddWishList = CreateAddWishListCommand(purchaseService, wishListRepository);
             ShowBookCover = CreateShowBookCoverCommand(messaging);
-            SubmitNewReview = CreateSubitNewReviewCommand(reviewRepository);
+            SubmitNewReview = CreateSubmitNewReviewCommand(reviewRepository);
             
             newReview.PropertyChanged += (sender, args) =>
             {
-                ChangeCanCommanExecute(SubmitNewReview);
+                ChangeCanCommandExecute(SubmitNewReview);
             };
 
         }
@@ -60,17 +63,22 @@ namespace Store.ViewModel
                execute: async () =>
                {
                    IsBusy = true;
+                   try
+                   {
+                       purchaseService.PurchaseAsync(m_book);
+                       m_bookViewModel.PurchasedCount += 1;
 
-                   purchaseService.PurchaseAsync(m_book);
-                   m_bookViewModel.PurchasedCount += 1;
+                       await wishListRepository.RemoveAsync(m_book);
 
-                   await wishListRepository.RemoveAsync(m_book);
+                       ChangeCanCommandExecute(PurchaseBook);
+                       UpdateCanBookBeAddedToWishList(m_book);
 
-                   ChangeCanCommanExecute(PurchaseBook);
-                   UpdateCanBookBeAddedToWishList(m_book);
-
-                   messaging.Send(this, BookPurchased, m_book);
-
+                       messaging.Send(this, BookPurchased, m_book);
+                   }
+                   catch(Exception ex)
+                   {
+                       m_messaging.Send(this, ex);
+                   }
                    IsBusy = false;  
 
                }, canExecute: () =>
@@ -84,12 +92,19 @@ namespace Store.ViewModel
             return new Command(
                 execute: async () =>
                 {
-                    IsBusy = true;
-
-                    m_canAddToWishList = false;
-                    ChangeCanCommanExecute(AddWishList);
-                    await wishListRepository.AddAsync(m_book);
-
+                    IsBusy = true;                    
+                    try
+                    {                   
+                        m_canAddToWishList = false;
+                        ChangeCanCommandExecute(AddWishList);
+                        await wishListRepository.AddAsync(m_book);                        
+                    }
+                    catch (Exception ex)
+                    {
+                        m_canAddToWishList = true;
+                        ChangeCanCommandExecute(AddWishList);
+                        m_messaging.Send(this, ex);
+                    }
                     IsBusy = false;
 
                 }, canExecute: () =>
@@ -112,56 +127,61 @@ namespace Store.ViewModel
 
         }
 
-        private ICommand CreateSubitNewReviewCommand(IReviewRepository reviews)
+        private ICommand CreateSubmitNewReviewCommand(IReviewRepository reviews)
         {
             return new Command(
                 execute: async () =>
                 {
-                    var review = NewReview.GetReview();
-                    await reviews.SaveReviewAsync(m_currentBookId.Value, review);
+                    try
+                    {
+                        var review = NewReview.GetReview();
+                        await reviews.SaveReviewAsync(m_currentBookId.Value, review);
 
-                    Reviews.Add(review);
-
-                    NewReview.Clear();
+                        Reviews.Add(review);
+                        NewReview.Clear();
+                    }
+                    catch(Exception ex)
+                    {
+                        m_messaging.Send(this, ex);
+                    }
+                    
                 },
                 canExecute: () =>
                 {
                     return NewReview.IsValid() && m_currentBookId.HasValue;
                 });
         }
-                
-        private void ChangeCanCommanExecute(ICommand command)
-        {
-            var c = (command as Command);
-            if (c != null)
-            {
-                c.ChangeCanExecute();
-            }
-        }
+            
    
         public async void Load(int bookId)
         {
             bool loadSelectedBook = (!m_currentBookId.HasValue || (m_currentBookId.Value != bookId));
             if (loadSelectedBook)
-            {
-                m_currentBookId = bookId;
-                ChangeCanCommanExecute(SubmitNewReview);
-
+            {                
                 IsBusy = true;
-                
-                var loadedBook = await m_booksRepository.LoadAsync(bookId);
-                m_book = loadedBook;
-                Book = new BookViewModel(loadedBook);
+                try
+                {
 
-                UpdateCanBookBeAddedToWishList(m_book);
+                    var loadedBook = await m_booksRepository.LoadAsync(bookId);
+                    m_currentBookId = bookId;
+                    m_book = loadedBook;
+                    Book = new BookViewModel(loadedBook);
 
-                ChangeCanCommanExecute(PurchaseBook);
-                ChangeCanCommanExecute(ShowBookCover);
+                    UpdateCanBookBeAddedToWishList(m_book);
 
-                var bookReviews = await m_reviewRepository.LoadReviewsAsync(bookId);
-                Reviews.Clear();
-                Reviews.AddRange(bookReviews);
+                    ChangeCanCommandExecute(PurchaseBook);
+                    ChangeCanCommandExecute(ShowBookCover);
+                    ChangeCanCommandExecute(SubmitNewReview);
 
+                    var bookReviews = await m_reviewRepository.LoadReviewsAsync(bookId);
+                    Reviews.Clear();
+                    Reviews.AddRange(bookReviews);
+
+                }
+                catch(Exception ex)
+                {
+                    m_messaging.Send(this, ex);
+                }                
                 IsBusy = false;
             }
         }
@@ -171,17 +191,25 @@ namespace Store.ViewModel
 
             if (m_currentBookId.HasValue)
             {
-                var isBookInWishList = await m_wishListRepository.IsInWishListAsync(selectedBook.Id);
-                var isBookPurchased = await m_purchaseService.IsPurchasedAsync(selectedBook);
+                try
+                {
+                    var isBookInWishList = await m_wishListRepository.IsInWishListAsync(selectedBook.Id);
+                    var isBookPurchased = await m_purchaseService.IsPurchasedAsync(selectedBook);
 
-                m_canAddToWishList = !isBookInWishList && !isBookPurchased;
+                    m_canAddToWishList = !isBookInWishList && !isBookPurchased;
+                }
+                catch(Exception ex)
+                {
+                    m_canAddToWishList = false;
+                    m_messaging.Send(this, ex);
+                }
             }
             else
             {
                 m_canAddToWishList = false;
             }
 
-            ChangeCanCommanExecute(AddWishList);
+            ChangeCanCommandExecute(AddWishList);
             
         }
 

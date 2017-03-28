@@ -41,10 +41,18 @@ namespace Store.Ui.Page
                 m_viewModel.IsBusy = true;
                 m_viewModel.DisableSelections();
 
-                var books = App.Container.Resolve<IBookRepository>();
-                var allPreviewIds = await books.LoadAllPreviewBookIdsAsync(selectedItem.Category.SelectedCategory);
-                await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds, selectedItem.Category.SelectedCategory));
 
+                try
+                {
+                    var books = App.Container.Resolve<IBookRepository>();
+                    var allPreviewIds = await books.LoadAllPreviewBookIdsAsync(selectedItem.Category.SelectedCategory);
+                    await Navigation.PushAsync(new BookCarouselPage(selectedItem.Id, allPreviewIds, selectedItem.Category.SelectedCategory));
+                }
+                catch (Exception ex)
+                {
+                    m_messaging.Send(this, ex);
+                }
+                
                 m_viewModel.IsBusy = false;
                 m_viewModel.EnableSelections();
             });

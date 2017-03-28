@@ -58,7 +58,7 @@ namespace Store.ViewModel
             {
                 if (SetProperty(ref m_isSelectable, value))
                 {
-                    (ShowSelectedItem as Command).ChangeCanExecute();
+                    ChangeCanCommandExecute(ShowSelectedItem);
                 }
             }
         }

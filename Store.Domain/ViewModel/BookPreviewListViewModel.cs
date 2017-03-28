@@ -1,6 +1,7 @@
 ﻿using Store.Interface.Domain;
 using Store.Interface.Repository;
 using Store.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,8 +31,7 @@ namespace Store.ViewModel
             Books = new ObservableRangeCollection<BookPreviewViewModel>();
 
         }
-
-
+        
         public async void LoadNextBooks(BookCategory.Category category)
         {
             if (!m_searchForMoreBooks || IsBusy)
@@ -41,7 +41,23 @@ namespace Store.ViewModel
 
             IsBusy = true;
 
-            IEnumerable<BookPreview> loadedBooks = await m_bookStore.LoadPreviewBookAsync(m_currentBookItemIndex, LoadItemsCount, category);
+            try
+            {
+                IEnumerable<BookPreview> loadedBooks = await m_bookStore.LoadPreviewBookAsync(m_currentBookItemIndex, LoadItemsCount, category);
+                UpdateLoadedBooks(loadedBooks);
+            }
+            catch (Exception ex)
+            {
+                m_messaging.Send(this, ex);
+            }
+
+
+            IsBusy = false;
+
+        }
+
+        private void UpdateLoadedBooks(IEnumerable<BookPreview> loadedBooks)
+        {
             m_currentBookItemIndex += loadedBooks.Count();
             m_searchForMoreBooks = (loadedBooks.Count() == LoadItemsCount);
 
@@ -53,22 +69,19 @@ namespace Store.ViewModel
             }
 
             Books.AddRange(bookViewModels);
-
-            IsBusy = false;
-
         }
 
         public void DisableSelection()
         {
-            changeBooksSelectableStatus(false);
+            ChangeBooksSelectableStatus(false);
         }
 
         public void EnableSelection()
         {
-            changeBooksSelectableStatus(true);
+            ChangeBooksSelectableStatus(true);
         }
 
-        private void changeBooksSelectableStatus(bool isSelectable)
+        private void ChangeBooksSelectableStatus(bool isSelectable)
         {
             foreach(var book in Books)
             {

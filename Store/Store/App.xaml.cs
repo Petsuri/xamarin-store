@@ -9,7 +9,9 @@ using Store.Service;
 using Store.Ui.Common;
 using Store.Ui.Page;
 using Store.ViewModel;
+using System;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace Store.Ui
 {
@@ -17,27 +19,56 @@ namespace Store.Ui
     {
 
         public static IUnityContainer Container { get; private set; }
-        
+
+        private NavigationPage m_navigation;
+
         public App()
         {
             InitializeComponent();
 
             Container = new UnityContainer();
             RegisterDependencies(Container);
-            var messaging = Container.Resolve<IMessageQueue>();
-            messaging.Subscribe<PurchaseBookViewModel, Book>(this, PurchaseBookViewModel.BookPurchased, ShowBookPurchasedNotification);
 
+            var messaging = Container.Resolve<IMessageQueue>();        
+            RegisterExceptionHandling(messaging);
+            RegisterNotifications(messaging);
 
-            MainPage = new HomePage();
-
-
+            var navigation = new NavigationPage();
+            m_navigation = navigation;
+            MainPage = new HomePage(navigation);
+            
         }
 
-        private void ShowBookPurchasedNotification(PurchaseBookViewModel sender, Book purchasedBook)
+        private void RegisterNotifications(IMessageQueue messaging)
         {
-            var notifications = Container.Resolve<INotifications>();
-            notifications.BookPurchased(purchasedBook);
+            messaging.Subscribe<PurchaseBookViewModel, Book>(
+                this, 
+                PurchaseBookViewModel.BookPurchased, 
+                (sender, purchasedBook) => 
+                {
+                    var notifications = Container.Resolve<INotifications>();
+                    notifications.BookPurchased(purchasedBook);
+                });
+
         }
+        
+        private void RegisterExceptionHandling(IMessageQueue messaging)
+        {
+            messaging.Subscribe<HomePage, Exception>(this, ShowExceptionMessage);
+            messaging.Subscribe<HomeDetailPage, Exception>(this, ShowExceptionMessage);
+
+            messaging.Subscribe<PurchaseBookViewModel, Exception>(this, ShowExceptionMessage);
+            messaging.Subscribe<BookPreviewListViewModel, Exception>(this, ShowExceptionMessage);            
+        }
+ 
+        private async void ShowExceptionMessage<TSender, TArgs>(TSender sender, TArgs ex) where TSender : class
+        {
+            var currentPage = m_navigation.CurrentPage;
+            await currentPage.DisplayAlert(
+                    "Ohjelman sisäinen virhe",
+                    "Ongelma on kirjattu lokiin, ja siitä on lähtenyt ilmoitus eteenpäin sähköpostilla.",
+                    "OK");
+        }       
 
         private static void RegisterDependencies(IUnityContainer container)
         {
@@ -51,7 +82,6 @@ namespace Store.Ui
             container.RegisterType<IWishListRepository, PersistentWishListRepository>();
             container.RegisterType<IPurchasedBooksRepository, PersistentPurchasedBooksRepository>();
         }
-
 
         protected override void OnStart()
         {

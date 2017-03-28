@@ -2,14 +2,13 @@
 using Xamarin.Forms;
 using Microsoft.Practices.Unity;
 using Store.ViewModel;
-using Store.Model;
 
 namespace Store.Ui.Page
 {
 
     public partial class PurchaseBookPage : ContentPage
     {
-
+        private bool m_isBookLoaded = false;
         private PurchaseBookViewModel m_model;
         public int BookId { get; private set; }
 
@@ -26,9 +25,15 @@ namespace Store.Ui.Page
 
         protected override void OnAppearing()
         {
-            
             base.OnAppearing();
-            m_model.Load(BookId);
+
+            if (!m_isBookLoaded)
+            {
+                m_model.Load(BookId);
+                m_isBookLoaded = true;
+            
+            }
+
 
         }
     }

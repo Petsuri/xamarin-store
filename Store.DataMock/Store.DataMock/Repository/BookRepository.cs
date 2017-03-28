@@ -195,6 +195,11 @@ namespace Store.DataMock
         {
             await Task.Delay(500);
 
+            if(id == 12)
+            {
+                throw new Exception("Jep, virhe tapahtui. Testataan virheenkäsittelyä");
+            }
+
             Book item = MangaPreviewItems.FirstOrDefault(book => book.Id == id);
             if (item == null)
             {
