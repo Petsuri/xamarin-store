@@ -37,6 +37,7 @@ namespace Store.Droid.Activities
             container.RegisterType<IApplication, AndroidApplication>();
             container.RegisterType<INotifications, AndroidNotifications>();
             container.RegisterType<IFileInformation, AndroidFileInformation>();
+            container.RegisterType<IInternetConnection, AndroidInternetConnection>();
 
             var fileInformation = container.Resolve<IFileInformation>();
             container.RegisterInstance<IDatabase>(new Database(fileInformation));

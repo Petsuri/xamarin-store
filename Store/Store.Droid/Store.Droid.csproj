@@ -160,6 +160,7 @@
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Platform\AndroidFileInformation.cs" />
+    <Compile Include="Platform\AndroidInternetConnection.cs" />
     <Compile Include="Platform\AndroidNotificationCenter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

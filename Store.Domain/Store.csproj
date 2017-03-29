@@ -41,6 +41,7 @@
     <Compile Include="Interface\Domain\IMessageQueue.cs" />
     <Compile Include="Interface\Domain\IWallet.cs" />
     <Compile Include="Interface\Platform\IFileInformation.cs" />
+    <Compile Include="Interface\Platform\IInternetConnection.cs" />
     <Compile Include="Interface\Repository\IBookRepository.cs" />
     <Compile Include="Interface\Repository\IPurchasedBooksRepository.cs" />
     <Compile Include="Interface\Repository\IReviewRepository.cs" />
