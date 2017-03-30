@@ -10,10 +10,15 @@ using Xamarin.Forms;
 using Store.Droid.Platform;
 using Store.Interface.Platform;
 using Store.LocalDatabase.Connection;
+using Android.Content;
+using Android.Net;
 
 namespace Store.Droid.Activities
 {
-    [Activity(Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(
+        Theme = "@style/MainTheme", 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -28,6 +33,9 @@ namespace Store.Droid.Activities
 
             RegisterDependecies(App.Container);
 
+            RegisterReceiver(
+                new AndroidInternetConnection(),
+                new IntentFilter(ConnectivityManager.ConnectivityAction));
 
         }
 

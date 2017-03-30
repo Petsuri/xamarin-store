@@ -29,46 +29,13 @@ namespace Store.Ui
             Container = new UnityContainer();
             RegisterDependencies(Container);
 
-            var messaging = Container.Resolve<IMessageQueue>();        
-            RegisterExceptionHandling(messaging);
-            RegisterNotifications(messaging);
-
             var navigation = new NavigationPage();
             m_navigation = navigation;
             MainPage = new HomePage(navigation);
             
         }
 
-        private void RegisterNotifications(IMessageQueue messaging)
-        {
-            messaging.Subscribe<PurchaseBookViewModel, Book>(
-                this, 
-                PurchaseBookViewModel.BookPurchased, 
-                (sender, purchasedBook) => 
-                {
-                    var notifications = Container.Resolve<INotifications>();
-                    notifications.BookPurchased(purchasedBook);
-                });
-
-        }
-        
-        private void RegisterExceptionHandling(IMessageQueue messaging)
-        {
-            messaging.Subscribe<HomePage, Exception>(this, ShowExceptionMessage);
-            messaging.Subscribe<HomeDetailPage, Exception>(this, ShowExceptionMessage);
-
-            messaging.Subscribe<PurchaseBookViewModel, Exception>(this, ShowExceptionMessage);
-            messaging.Subscribe<BookPreviewListViewModel, Exception>(this, ShowExceptionMessage);            
-        }
- 
-        private async void ShowExceptionMessage<TSender, TArgs>(TSender sender, TArgs ex) where TSender : class
-        {
-            var currentPage = m_navigation.CurrentPage;
-            await currentPage.DisplayAlert(
-                    "Ohjelman sisäinen virhe",
-                    "Ongelma on kirjattu lokiin, ja siitä on lähtenyt ilmoitus eteenpäin sähköpostilla.",
-                    "OK");
-        }       
+   
 
         private static void RegisterDependencies(IUnityContainer container)
         {
@@ -83,9 +50,52 @@ namespace Store.Ui
             container.RegisterType<IPurchasedBooksRepository, PersistentPurchasedBooksRepository>();
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
-            // Handle when your app starts
+            var messaging = Container.Resolve<IMessageQueue>();
+            RegisterExceptionHandling(messaging);
+            RegisterNotifications(messaging);
+
+            var service = Container.Resolve<InternetAccessService>();
+            await service.RequestInternetAccess();
+
+        }
+
+        private void RegisterNotifications(IMessageQueue messaging)
+        {
+            messaging.Subscribe<PurchaseBookViewModel, Book>(
+                this,
+                PurchaseBookViewModel.BookPurchased,
+                (sender, purchasedBook) =>
+                {
+                    var notifications = Container.Resolve<INotifications>();
+                    notifications.BookPurchased(purchasedBook);
+                });
+
+            messaging.Subscribe<IInternetConnection>(this, "StateChanged", async (sender) =>
+            {
+                var service = Container.Resolve<InternetAccessService>();
+                await service.RequestInternetAccess();
+            });
+
+        }
+
+        private void RegisterExceptionHandling(IMessageQueue messaging)
+        {
+            messaging.Subscribe<HomePage, Exception>(this, ShowExceptionMessage);
+            messaging.Subscribe<HomeDetailPage, Exception>(this, ShowExceptionMessage);
+
+            messaging.Subscribe<PurchaseBookViewModel, Exception>(this, ShowExceptionMessage);
+            messaging.Subscribe<BookPreviewListViewModel, Exception>(this, ShowExceptionMessage);
+        }
+
+        private async void ShowExceptionMessage<TSender, TArgs>(TSender sender, TArgs ex) where TSender : class
+        {
+            var currentPage = m_navigation.CurrentPage;
+            await currentPage.DisplayAlert(
+                    "Ohjelman sisäinen virhe",
+                    "Ongelma on kirjattu lokiin, ja siitä on lähtenyt ilmoitus eteenpäin sähköpostilla.",
+                    "OK");
         }
 
         protected override void OnSleep()

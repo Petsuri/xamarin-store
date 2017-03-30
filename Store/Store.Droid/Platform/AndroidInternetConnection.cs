@@ -12,10 +12,13 @@ using Android.Widget;
 using Store.Interface.Platform;
 using Android.Net;
 using System.Threading.Tasks;
+using Store.Interface.Domain;
+using Store.Ui;
+using Microsoft.Practices.Unity;
 
 namespace Store.Droid.Platform
 {
-    class AndroidInternetConnection : IInternetConnection
+    class AndroidInternetConnection : BroadcastReceiver, IInternetConnection
     {
 
         private Context m_currentContext;
@@ -51,19 +54,15 @@ namespace Store.Droid.Platform
             bool? isAccepted = null;
 
             var requestConnection = new AlertDialog.Builder(Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity)
-                .SetCancelable(false)               
+                .SetCancelable(false)
                 .SetTitle("Petrin kauppa vaatii internetin")
                 .SetMessage("Siirry laittamaan internet p‰‰lle")
-                .SetPositiveButton("OK", new EventHandler<DialogClickEventArgs>((sender, e) =>
+                .SetPositiveButton("Tarkista yhteys", new EventHandler<DialogClickEventArgs>((sender, e) =>
                 {
-
-                    Intent i = new Intent(Android.Provider.Settings.ActionWirelessSettings);
-                    m_currentContext.StartActivity(i);
-
                     isAccepted = true;
 
                 }))
-                .SetNegativeButton("Peruuta", new EventHandler<DialogClickEventArgs>((sender, e) =>
+                .SetNegativeButton("Sulje", new EventHandler<DialogClickEventArgs>((sender, e) =>
                 {
                     isAccepted = false;
                 }));
@@ -77,6 +76,16 @@ namespace Store.Droid.Platform
             }
 
             return isAccepted.Value;
+
+        }
+        
+        public override void OnReceive(Context context, Intent intent)
+        {
+            if (!IsConnected())
+            {
+                var messaging = App.Container.Resolve<IMessageQueue>();
+                messaging.Send<IInternetConnection>(this, "StateChanged");
+            }
 
         }
     }

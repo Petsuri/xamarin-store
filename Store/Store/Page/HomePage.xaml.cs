@@ -27,25 +27,7 @@ namespace Store.Ui.Page
             Detail = navigationPage;
             
         }
-
-        protected async override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            var internet = App.Container.Resolve<IInternetConnection>();
-            if (!internet.IsConnected())
-            {    
-                while (!internet.IsConnected())
-                {
-                    bool isCanceled = !(await internet.RequestConnection());
-                    if (isCanceled)
-                    {
-                        CloseProgram();
-                    }
-                }
-            }
-
-        }
+        
 
         private async void ShowOwnBooks(object sender, EventArgs e)
         {
